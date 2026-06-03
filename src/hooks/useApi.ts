@@ -148,14 +148,32 @@ export function useProductsQuery() {
 }
 
 export function useCategoriesQuery() {
-  const { data: products = [] } = useProductsQuery();
   return useQuery<string[]>({
-    queryKey: ['api-categories', products.length],
-    queryFn: () => {
-      const cats = new Set(products.map(p => p.category));
-      return ['Todas', ...Array.from(cats)];
+    queryKey: ['api-categories'],
+    queryFn: async () => {
+      const res = await fetch(`${API_BASE}/categorias/empresa/telecom-bl`);
+      if (!res.ok) throw new Error('Failed to fetch categories');
+      const data = await res.json();
+      const apiCategories: ApiCategory[] = data.result || [];
+      const apiCategoryNames = apiCategories.map(c => c.nombre);
+      
+      // Merge with mock categories to ensure offline mock products still work
+      const mockCategories = ["iPhone", "Samsung", "Xiaomi", "Motorola", "Oppo / Infinix", "Honor", "ZTE"];
+      
+      // Filter mock categories that have equivalent names in API to avoid duplicates
+      const normalizedApiNames = new Set(apiCategoryNames.map(name => name.toLowerCase().trim()));
+      
+      const uniqueMockCats = mockCategories.filter(mockCat => {
+        const lowerMock = mockCat.toLowerCase().trim();
+        if (lowerMock === 'iphone' && (normalizedApiNames.has('iphones') || normalizedApiNames.has('iphone'))) return false;
+        if (lowerMock === 'samsung' && (normalizedApiNames.has('samsungs') || normalizedApiNames.has('samsung'))) return false;
+        return !normalizedApiNames.has(lowerMock);
+      });
+      
+      const allCats = [...apiCategoryNames, ...uniqueMockCats];
+      return ['Todas', ...allCats];
     },
-    enabled: products.length > 0
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 }
 
