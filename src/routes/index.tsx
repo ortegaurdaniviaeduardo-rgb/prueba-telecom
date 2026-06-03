@@ -195,7 +195,7 @@ function Index() {
                 align: "start",
                 loop: true,
               }}
-              className="w-full relative"
+              className="w-full relative px-4 md:px-10"
             >
               <CarouselContent className="-ml-4">
                 {testimonials.map((testimonial) => (
@@ -206,6 +206,8 @@ function Index() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
+              <CarouselPrevious className="left-0 md:-left-4 bg-white/90 hover:bg-[#FF7043] text-[#1B1857] hover:text-white border border-slate-200 w-10 h-10 md:w-12 md:h-12 shadow-md transition-all duration-300" />
+              <CarouselNext className="right-0 md:-right-4 bg-white/90 hover:bg-[#FF7043] text-[#1B1857] hover:text-white border border-slate-200 w-10 h-10 md:w-12 md:h-12 shadow-md transition-all duration-300" />
             </Carousel>
           </div>
 
