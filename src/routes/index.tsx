@@ -53,11 +53,11 @@ function Index() {
               <CarouselContent>
                 {heroSlides.map((slide, index) => (
                   <CarouselItem key={index}>
-                    <div className="relative w-full flex items-center justify-center bg-[#1B1857]">
+                    <div className="relative w-full aspect-[5000/2813] overflow-hidden bg-[#1B1857]">
                       <img
                         src={slide}
                         alt={`Portada promocional ${index + 1}`}
-                        className="w-full h-auto max-h-[70vh] object-contain"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </CarouselItem>
