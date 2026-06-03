@@ -31,9 +31,6 @@ function CatalogoComponent() {
 
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(urlCategory || "Todas");
-  const [selectedFeatured, setSelectedFeatured] = useState<"all" | "featured">("all");
-  const [selectedCamera, setSelectedCamera] = useState<"all" | "basic" | "50mp" | "high">("all");
-  const [selectedScreen, setSelectedScreen] = useState<"all" | "small" | "medium" | "large">("all");
   const [sortOrder, setSortOrder] = useState<"recent" | "oldest">("recent");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -43,32 +40,8 @@ function CatalogoComponent() {
         p.brand.toLowerCase().includes(search.toLowerCase()) ||
         p.features.some(f => f.toLowerCase().includes(search.toLowerCase()));
       const matchesCategory = selectedCategory === "Todas" || p.category === selectedCategory;
-      const matchesFeatured = selectedFeatured === "all" || p.isFeatured;
 
-      // Camera match
-      const cameraFeature = p.features.find(f => f.toLowerCase().includes("cámara"));
-      let cameraType = "basic";
-      if (cameraFeature) {
-        if (cameraFeature.includes("50MP")) cameraType = "50mp";
-        else if (cameraFeature.includes("108MP") || cameraFeature.includes("200MP")) cameraType = "high";
-      }
-      const matchesCamera = selectedCamera === "all" || cameraType === selectedCamera;
-
-      // Screen match
-      const screenFeature = p.features.find(f => f.toLowerCase().includes("pantalla"));
-      let screenSizeGroup = "medium";
-      if (screenFeature) {
-        const match = screenFeature.match(/(\d+\.?\d*)/);
-        if (match) {
-          const size = parseFloat(match[1]);
-          if (size <= 6.2) screenSizeGroup = "small";
-          else if (size >= 6.7) screenSizeGroup = "large";
-          else screenSizeGroup = "medium";
-        }
-      }
-      const matchesScreen = selectedScreen === "all" || screenSizeGroup === selectedScreen;
-
-      return matchesSearch && matchesCategory && matchesFeatured && matchesCamera && matchesScreen;
+      return matchesSearch && matchesCategory;
     });
 
     // Sort by date
@@ -79,9 +52,9 @@ function CatalogoComponent() {
     });
 
     return result;
-  }, [apiProducts, search, selectedCategory, selectedFeatured, selectedCamera, selectedScreen, sortOrder]);
+  }, [apiProducts, search, selectedCategory, sortOrder]);
 
-  const hasActiveFilters = selectedCategory !== "Todas" || selectedFeatured !== "all" || selectedCamera !== "all" || selectedScreen !== "all" || search !== "";
+  const hasActiveFilters = selectedCategory !== "Todas" || search !== "";
 
   return (
     <div className="bg-[#FFFBFB] min-h-screen">
@@ -121,247 +94,25 @@ function CatalogoComponent() {
 
           {/* Filters Row */}
           <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-slate-100">
-            <div className="flex flex-wrap items-center gap-2.5">
-              {/* Dropdown 1: Marca */}
-              <div className="relative">
-                <button 
-                  onClick={() => setOpenDropdown(openDropdown === "brand" ? null : "brand")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-bold transition-all duration-200 ${
-                    openDropdown === "brand" || selectedCategory !== "Todas"
-                      ? "border-[#00BAA2] bg-[#00BAA2]/5 text-[#00BAA2]"
-                      : "border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                  }`}
-                >
-                  <Smartphone className="w-4 h-4 opacity-80" />
-                  <span>{selectedCategory === "Todas" ? "Todas las marcas" : selectedCategory}</span>
-                  <ChevronDown className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${openDropdown === "brand" ? "rotate-180" : ""}`} />
-                </button>
-                {openDropdown === "brand" && (
-                  <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 min-w-[200px] z-30 animate-in fade-in slide-in-from-top-2 duration-200">
-                    {categories.map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => {
-                          setSelectedCategory(cat);
-                          setOpenDropdown(null);
-                        }}
-                        className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                          selectedCategory === cat ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Dropdown 2: Equipos (Featured) */}
-              <div className="relative">
-                <button 
-                  onClick={() => setOpenDropdown(openDropdown === "featured" ? null : "featured")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-bold transition-all duration-200 ${
-                    openDropdown === "featured" || selectedFeatured !== "all"
-                      ? "border-[#00BAA2] bg-[#00BAA2]/5 text-[#00BAA2]"
-                      : "border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                  }`}
-                >
-                  <Star className="w-4 h-4 opacity-80" />
-                  <span>{selectedFeatured === "all" ? "Todos los equipos" : "Equipos destacados"}</span>
-                  <ChevronDown className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${openDropdown === "featured" ? "rotate-180" : ""}`} />
-                </button>
-                {openDropdown === "featured" && (
-                  <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 min-w-[200px] z-30 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <button
-                      onClick={() => {
-                        setSelectedFeatured("all");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedFeatured === "all" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Todos los equipos
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedFeatured("featured");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedFeatured === "featured" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Equipos destacados
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Dropdown 3: Cámara */}
-              <div className="relative">
-                <button 
-                  onClick={() => setOpenDropdown(openDropdown === "camera" ? null : "camera")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-bold transition-all duration-200 ${
-                    openDropdown === "camera" || selectedCamera !== "all"
-                      ? "border-[#00BAA2] bg-[#00BAA2]/5 text-[#00BAA2]"
-                      : "border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                  }`}
-                >
-                  <Camera className="w-4 h-4 opacity-80" />
-                  <span>
-                    {selectedCamera === "all" 
-                      ? "Cualquier cámara" 
-                      : selectedCamera === "basic" 
-                      ? "Cámara 12-48MP" 
-                      : selectedCamera === "50mp" 
-                      ? "Cámara 50MP" 
-                      : "Cámara 108-200MP"}
-                  </span>
-                  <ChevronDown className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${openDropdown === "camera" ? "rotate-180" : ""}`} />
-                </button>
-                {openDropdown === "camera" && (
-                  <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 min-w-[220px] z-30 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <button
-                      onClick={() => {
-                        setSelectedCamera("all");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedCamera === "all" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Cualquier cámara
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedCamera("basic");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedCamera === "basic" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Básica (12MP - 48MP)
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedCamera("50mp");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedCamera === "50mp" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Media (50MP)
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedCamera("high");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedCamera === "high" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Pro (108MP - 200MP)
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Dropdown 4: Pantalla */}
-              <div className="relative">
-                <button 
-                  onClick={() => setOpenDropdown(openDropdown === "screen" ? null : "screen")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-bold transition-all duration-200 ${
-                    openDropdown === "screen" || selectedScreen !== "all"
-                      ? "border-[#00BAA2] bg-[#00BAA2]/5 text-[#00BAA2]"
-                      : "border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
-                  }`}
-                >
-                  <Maximize className="w-4 h-4 opacity-80" />
-                  <span>
-                    {selectedScreen === "all" 
-                      ? "Cualquier pantalla" 
-                      : selectedScreen === "small" 
-                      ? "Pantalla ≤ 6.2\"" 
-                      : selectedScreen === "medium" 
-                      ? "Pantalla 6.3\" - 6.6\"" 
-                      : "Pantalla ≥ 6.7\""}
-                  </span>
-                  <ChevronDown className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${openDropdown === "screen" ? "rotate-180" : ""}`} />
-                </button>
-                {openDropdown === "screen" && (
-                  <div className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 min-w-[240px] z-30 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <button
-                      onClick={() => {
-                        setSelectedScreen("all");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedScreen === "all" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Cualquier pantalla
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedScreen("small");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedScreen === "small" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Pequeña (hasta 6.2")
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedScreen("medium");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedScreen === "medium" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Mediana (6.3" - 6.6")
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedScreen("large");
-                        setOpenDropdown(null);
-                      }}
-                      className={`w-full px-4 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-slate-50 ${
-                        selectedScreen === "large" ? "text-[#00BAA2] bg-[#00BAA2]/5" : "text-[#1B1857]"
-                      }`}
-                    >
-                      Grande (6.7" o más)
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Reset active filters */}
-              {hasActiveFilters && (
+            {/* Brand Pills */}
+            <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+              {categories.map((cat) => (
                 <button
-                  onClick={() => {
-                    setSelectedCategory("Todas");
-                    setSelectedFeatured("all");
-                    setSelectedCamera("all");
-                    setSelectedScreen("all");
-                    setSearch("");
-                  }}
-                  className="text-xs font-bold text-red-500 hover:text-red-600 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 hover:bg-red-100 ml-1"
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
+                    selectedCategory === cat
+                      ? "bg-[#00BAA2] text-white shadow-md shadow-[#00BAA2]/20 border border-transparent"
+                      : "border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
+                  }`}
                 >
-                  <FilterX className="w-3.5 h-3.5" />
-                  Limpiar
+                  {cat === "Todas" ? "Todas las marcas" : cat}
                 </button>
-              )}
+              ))}
             </div>
 
-            {/* Dropdown 5: Sort */}
-            <div className="relative">
+            {/* Date Sort Dropdown */}
+            <div className="relative shrink-0">
               <button 
                 onClick={() => setOpenDropdown(openDropdown === "sort" ? null : "sort")}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-[#1B1857] text-sm font-bold transition-all shadow-sm"
@@ -434,9 +185,6 @@ function CatalogoComponent() {
                   onClick={() => {
                     setSearch("");
                     setSelectedCategory("Todas");
-                    setSelectedFeatured("all");
-                    setSelectedCamera("all");
-                    setSelectedScreen("all");
                   }}
                 >
                   Ver todos los equipos
