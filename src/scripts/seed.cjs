@@ -296,9 +296,13 @@ async function main() {
 
     // 5. Seed products
     for (const prod of productsToSeed) {
-      const isAlreadyAdded = existingProductNames.has(prod.name.toLowerCase().trim());
-      if (isAlreadyAdded) {
-        console.log(`⏭ Saltando "${prod.name}" (ya existe en FlyUp)`);
+      const apiProd = existingProducts.find(p => p.nombre.toLowerCase().trim() === prod.name.toLowerCase().trim());
+      
+      let productId = apiProd?.id;
+      const needsImage = !apiProd || !apiProd.imagenes_relacionadas || apiProd.imagenes_relacionadas.length === 0;
+
+      if (apiProd && !needsImage) {
+        console.log(`⏭ Saltando "${prod.name}" (ya existe y tiene imagen vinculada)`);
         continue;
       }
 
@@ -311,113 +315,123 @@ async function main() {
         continue;
       }
 
-      // Handle image upload
-      let uploadedImageId = null;
-      const localImagePath = path.join(__dirname, '../../public', prod.image);
-
-      if (fs.existsSync(localImagePath)) {
+      // If product does not exist, create it first
+      if (!apiProd) {
         try {
-          console.log(`  🖼 Subiendo imagen: ${prod.image}...`);
-          const fileBuffer = fs.readFileSync(localImagePath);
-          const fileName = path.basename(localImagePath);
-          
-          const formData = new FormData();
-          const blob = new Blob([fileBuffer], { type: 'image/jpeg' });
-          formData.append('files', blob, fileName);
-          
-          const uploadRes = await fetch(`${API_BASE}/imagenes/uploads`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            },
-            body: formData
-          });
+          console.log(`  ➕ Creando producto en catálogo...`);
+          const prodPayload = {
+            nombre: prod.name,
+            descripcion: prod.features.join(', '),
+            sku: null,
+            slug: slugify(prod.name),
+            destacado: prod.isFeatured,
+            precio: 0,
+            precio_costo: null,
+            precio_falso: null,
+            estado: true,
+            estado_tienda: true,
+            categoria_id: categoryId,
+            marca_id: null,
+            tipo_producto: 'basico'
+          };
 
-          if (!uploadRes.ok) {
-            const errText = await uploadRes.text();
-            throw new Error(`Error en subida de imagen: ${errText}`);
-          }
-
-          const uploadData = await uploadRes.json();
-          uploadedImageId = uploadData.result?.id;
-          console.log(`  ✔ Imagen subida con ID: ${uploadedImageId}`);
-        } catch (imgError) {
-          console.error(`  \x1b[33m⚠ Advertencia al subir imagen para "${prod.name}": ${imgError.message}. Se creará sin imagen.\x1b[0m`);
-        }
-      } else {
-        console.warn(`  \x1b[33m⚠ No se encontró archivo local en: ${localImagePath}. Se creará sin imagen.\x1b[0m`);
-      }
-
-      // Create product
-      try {
-        console.log(`  ➕ Creando producto en catálogo...`);
-        const prodPayload = {
-          nombre: prod.name,
-          descripcion: prod.features.join(', '),
-          sku: null,
-          slug: slugify(prod.name),
-          destacado: prod.isFeatured,
-          precio: 0,
-          precio_costo: null,
-          precio_falso: null,
-          estado: true,
-          estado_tienda: true,
-          categoria_id: categoryId,
-          marca_id: null,
-          tipo_producto: 'basico'
-        };
-
-        const prodRes = await fetch(`${API_BASE}/productos`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(prodPayload)
-        });
-
-        if (!prodRes.ok) {
-          const errText = await prodRes.text();
-          throw new Error(`Error al crear producto: ${errText}`);
-        }
-
-        const prodData = await prodRes.json();
-        const newProductId = prodData.result?.id;
-        console.log(`  ✔ Producto creado con ID: ${newProductId}`);
-
-        // Link image to product if uploaded
-        if (newProductId && uploadedImageId) {
-          console.log(`  🔗 Vinculando imagen al producto...`);
-          const linkRes = await fetch(`${API_BASE}/imagenes/vinculate`, {
+          const prodRes = await fetch(`${API_BASE}/productos`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({
-              entidad_id: newProductId,
-              entidad_tipo: 'producto',
-              imagenes_relacionadas: [
-                {
-                  id: uploadedImageId,
-                  orden: 1
-                }
-              ]
-            })
+            body: JSON.stringify(prodPayload)
           });
 
-          if (!linkRes.ok) {
-            const errText = await linkRes.text();
-            console.error(`  \x1b[31m✘ Error al vincular imagen: ${errText}\x1b[0m`);
-          } else {
-            console.log(`  ✔ Imagen vinculada correctamente!`);
+          if (!prodRes.ok) {
+            const errText = await prodRes.text();
+            throw new Error(`Error al crear producto: ${errText}`);
           }
+
+          const prodData = await prodRes.json();
+          productId = prodData.result?.id;
+          console.log(`  ✔ Producto creado con ID: ${productId}`);
+        } catch (prodError) {
+          console.error(`  \x1b[31m✘ Error al crear producto "${prod.name}": ${prodError.message}\x1b[0m`);
+          continue;
+        }
+      } else {
+        console.log(`  ℹ El producto ya existe (ID: ${productId}), procediendo a subir y vincular su imagen.`);
+      }
+
+      // Upload and link image if needed
+      if (productId && needsImage) {
+        let uploadedImageId = null;
+        const localImagePath = path.join(__dirname, '../../public', prod.image);
+
+        if (fs.existsSync(localImagePath)) {
+          try {
+            console.log(`  🖼 Subiendo imagen: ${prod.image}...`);
+            const fileBuffer = fs.readFileSync(localImagePath);
+            const fileName = path.basename(localImagePath);
+            
+            const formData = new FormData();
+            const blob = new Blob([fileBuffer], { type: 'image/jpeg' });
+            formData.append('files', blob, fileName);
+            
+            const uploadRes = await fetch(`${API_BASE}/imagenes/uploads`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${token}`
+              },
+              body: formData
+            });
+
+            if (!uploadRes.ok) {
+              const errText = await uploadRes.text();
+              throw new Error(`Error en subida de imagen: ${errText}`);
+            }
+
+            const uploadData = await uploadRes.json();
+            uploadedImageId = Array.isArray(uploadData.result) ? uploadData.result[0]?.id : uploadData.result?.id;
+            console.log(`  ✔ Imagen subida con ID: ${uploadedImageId}`);
+          } catch (imgError) {
+            console.error(`  \x1b[33m⚠ Advertencia al subir imagen para "${prod.name}": ${imgError.message}\x1b[0m`);
+          }
+        } else {
+          console.warn(`  \x1b[33m⚠ No se encontró archivo local en: ${localImagePath}\x1b[0m`);
         }
 
-        console.log(`\x1b[32m✔ Se subió exitosamente: "${prod.name}"\x1b[0m`);
-      } catch (prodError) {
-        console.error(`\x1b[31m✘ Error al procesar producto "${prod.name}": ${prodError.message}\x1b[0m`);
+        // Link image to product
+        if (uploadedImageId) {
+          try {
+            console.log(`  🔗 Vinculando imagen al producto...`);
+            const linkRes = await fetch(`${API_BASE}/imagenes/vinculate`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify({
+                entidad_id: productId,
+                entidad_tipo: 'producto',
+                imagenes_relacionadas: [
+                  {
+                    id: uploadedImageId,
+                    orden: 1
+                  }
+                ]
+              })
+            });
+
+            if (!linkRes.ok) {
+              const errText = await linkRes.text();
+              console.error(`  \x1b[31m✘ Error al vincular imagen: ${errText}\x1b[0m`);
+            } else {
+              console.log(`  ✔ Imagen vinculada correctamente!`);
+            }
+          } catch (linkErr) {
+            console.error(`  \x1b[31m✘ Excepción al vincular imagen: ${linkErr.message}\x1b[0m`);
+          }
+        }
       }
+      console.log(`\x1b[32m✔ Procesado completo para: "${prod.name}"\x1b[0m\n`);
     }
 
     console.log('\n\x1b[32;1m=== PROCESO DE SUBIDA COMPLETADO CON ÉXITO ===\x1b[0m');
