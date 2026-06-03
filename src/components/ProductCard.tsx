@@ -37,18 +37,36 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Image Area */}
         <div className="relative w-full aspect-[4/5] bg-[#F8FAFC] overflow-hidden p-6 flex items-center justify-center">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 z-0"></div>
+          
+          {/* Main Image */}
           <img
             src={product.image}
             alt={product.name}
-            className="relative z-10 w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-xl"
+            className={`relative z-10 w-full h-full object-contain transition-all duration-700 ease-out drop-shadow-xl ${
+              product.images && product.images.length > 1
+                ? "group-hover:opacity-0 group-hover:scale-95"
+                : "group-hover:scale-110"
+            }`}
           />
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-[#1B1857]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center">
-            <div className="bg-white/95 backdrop-blur-sm rounded-full px-5 py-2.5 flex items-center gap-2 text-[#1B1857] font-bold text-sm shadow-lg transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
-              <Eye className="w-4 h-4" />
-              Ver detalles
+
+          {/* Secondary Image (Hover State) */}
+          {product.images && product.images.length > 1 && (
+            <img
+              src={product.images[1]}
+              alt={`${product.name} - vista alterna`}
+              className="absolute inset-0 z-15 w-full h-full object-contain p-6 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-95 group-hover:scale-105 drop-shadow-xl"
+            />
+          )}
+
+          {/* Hover overlay (Only shown if there is 1 image) */}
+          {(!product.images || product.images.length <= 1) && (
+            <div className="absolute inset-0 bg-[#1B1857]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center">
+              <div className="bg-white/95 backdrop-blur-sm rounded-full px-5 py-2.5 flex items-center gap-2 text-[#1B1857] font-bold text-sm shadow-lg transform translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                <Eye className="w-4 h-4" />
+                Ver detalles
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Content */}

@@ -203,9 +203,8 @@ function AppLayout() {
       >
         <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex flex-col relative group z-50">
+          <Link to="/" className="flex relative group z-50">
             <img src={logoUrl} alt={brandName} className="h-14 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
-            <span className="text-[8px] md:text-[9px] text-[#00BAA2] font-black tracking-[0.2em] absolute -bottom-4 md:-bottom-5 left-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">TU TECNOLOGÍA A CRÉDITO</span>
           </Link>
 
           {/* Desktop Nav */}
