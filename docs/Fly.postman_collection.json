@@ -1,0 +1,2757 @@
+{
+  "info": {
+    "_postman_id": "4dfbaa63-a837-478b-8a65-e85076a52c51",
+    "name": "Fly",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55443247",
+    "_collection_link": "https://go.postman.co/collection/55443247-4dfbaa63-a837-478b-8a65-e85076a52c51?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"token\", data.result.token)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"slug\": \"{{slug}}\",\r\n    \"correo\": \"{{correo}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{dominio}}/auth/login",
+              "host": [
+                "{{dominio}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Client",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"slug\": \"{{slug}}\",\r\n    \"correo\": \"{{correo}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{dominio}}/auth/register/client",
+              "host": [
+                "{{dominio}}"
+              ],
+              "path": [
+                "auth",
+                "register",
+                "client"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Admin",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"slug\": \"{{slug}}\",\r\n    \"correo\": \"{{correo}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"rol_id\": \"{{rol_id}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{dominio}}/auth/register/admin",
+              "host": [
+                "{{dominio}}"
+              ],
+              "path": [
+                "auth",
+                "register",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{dominio}}/auth/verify",
+              "host": [
+                "{{dominio}}"
+              ],
+              "path": [
+                "auth",
+                "verify"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Empresas",
+      "item": [
+        {
+          "name": "Cliente",
+          "item": [
+            {
+              "name": "GetBySlug",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dominio}}/empresas/slug/{{slug}}",
+                  "host": [
+                    "{{dominio}}"
+                  ],
+                  "path": [
+                    "empresas",
+                    "slug",
+                    "{{slug}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre_legal\": \"PICO REY\",\r\n    \"slug\": \"pico-rey2\",\r\n    \"correo\": \"picorey@gmail.com\",\r\n    \"celular\": \"999999999\",\r\n    \"whatsapp\": \"999999999\",\r\n    \"direccion\": \"Amazonas\",\r\n    \"estado\": true,\r\n    \"precio_delivery\": 0,\r\n    \"activar_local\": false,\r\n    \"link_facebook\": null,\r\n    \"link_instagram\": null,\r\n    \"link_x\": null,\r\n    \"link_tiktok\": null,\r\n    \"horario\": null\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/empresas/token",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "empresas",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/empresas/token",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "empresas",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Empresa",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"rubro\": \"comercio\",\r\n    \"especialidad\": \"polleria\",\r\n    \"modo\": \"produccion\",\r\n    \"nombre_legal\": \"Pascualina INC. Company Limited SAC\",\r\n    \"nombre_marca\": \"Amen Underware\",\r\n    \"descripcion\": \"Ropa interior masculina\",\r\n    \"numero_documento\": \"20554198920\",\r\n    \"slug\": \"amen-underware\",\r\n    \"correo\": \"miguel-chau-bulnes@hotmail.com\",\r\n    \"celular\": \"987098664\",\r\n    \"whatsapp\": \"987098664\",\r\n    \"direccion\": \"Cal Miguel de Cervantes 150, dpto 101, urb. Covima Lima, La Molina\",\r\n    \"estado\": true,\r\n    \"plan_precio_id\": \"b7a11565-2879-4d10-b6b2-64cad92dacf4\",\r\n    \"plan_precio_real\": 199,\r\n    \"precio_delivery\": 3.00,\r\n    \"activar_local\": true,\r\n    \"link_facebook\": null,\r\n    \"link_instagram\": null,\r\n    \"link_x\": null,\r\n    \"link_tiktok\": null,\r\n    \"link_youtube\": null,\r\n    \"link_google_maps\": null,\r\n    \"horario\": null\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{dominio}}/empresas/token",
+              "host": [
+                "{{dominio}}"
+              ],
+              "path": [
+                "empresas",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Colores",
+      "item": [
+        {
+          "name": "Cliente",
+          "item": [
+            {
+              "name": "GetBySlug",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/colores/empresa/{{slug}}",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "colores",
+                    "empresa",
+                    "{{slug}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n        \"color_primario\": \"#F8B101\",\r\n        \"color_primario_light\": \"#FACC66\",\r\n        \"color_primario_dark\": \"#C68D01\",\r\n        \"color_secundario\": \"#8C1B1B\",\r\n        \"color_secundario_light\": \"#BA5C5C\",\r\n        \"color_secundario_dark\": \"#5C1414\",\r\n        \"color_fondo\": \"#FAEBC8\",\r\n        \"color_fondo_light\": \"#FFFFFF\",\r\n        \"color_fondo_dark\": \"#000000\",\r\n        \"color_texto\": \"#000000\",\r\n        \"color_texto_light\": \"#FFFFFF\",\r\n        \"color_texto_muted\": \"#6B7280\",\r\n        \"created_at\": \"2025-12-10T21:30:45.133Z\",\r\n        \"updated_at\": \"2025-12-10T21:30:45.133Z\"\r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/colores",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "colores"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Roles\",\r\n    \"descripcion\": \"Acceso a roles\",\r\n    \"permisos_id\": [\r\n        \"949560ad-dca8-4c1f-bf60-0c04a2c3991e\",\r\n        \"faae8abc-b369-4c2b-bcf5-aeb3bd133e7d\",\r\n        \"ef529fd3-6c82-4fbb-8377-d75e8d3a2573\",\r\n        \"0fb1086b-be2e-4c4a-8f1b-1d45f4531b6d\"\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/roles",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Admin\",\r\n    \"descripcion\": \"Acceso a todo\",\r\n    \"permisos_id\": [\r\n        \"106afbc6-f9e5-4ecb-ba44-8140e3102baf\",\r\n        \"faae8abc-b369-4c2b-bcf5-aeb3bd133e7d\",\r\n        \"ef529fd3-6c82-4fbb-8377-d75e8d3a2573\",\r\n        \"949560ad-dca8-4c1f-bf60-0c04a2c3991e\",\r\n        \"0fb1086b-be2e-4c4a-8f1b-1d45f4531b6d\",\r\n        \"fa92d4e9-8b7a-4304-8933-6889ce4cd75d\",\r\n        \"3f0d6f2a-1c36-40c5-b77c-4d0f0da31002\",\r\n        \"18422e81-6cf7-41e4-b4a8-9f48c7276749\",\r\n        \"eca50120-9722-42b0-b9ef-db9a098ea5c3\"\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/roles/{{rol_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "roles",
+                "{{rol_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/roles/{{rol_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "roles",
+                "{{rol_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/roles",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "roles"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/roles/{{rol_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "roles",
+                "{{rol_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categorías",
+      "item": [
+        {
+          "name": "Cliente",
+          "item": [
+            {
+              "name": "GetAllBySlug",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dominio}}/categorias/empresa/{{slug}}",
+                  "host": [
+                    "{{dominio}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "empresa",
+                    "{{slug}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"categoria_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Brasas\",\r\n    \"slug\": \"brasas\",\r\n    \"descripcion\": null,\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/categorias",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Blusas\",\r\n    \"slug\": \"blusas\",\r\n    \"descripcion\": null,\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/categorias/{{categoria_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "categorias",
+                "{{categoria_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{dominio}}/categorias",
+              "host": [
+                "{{dominio}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/categorias/{{categoria_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "categorias",
+                "{{categoria_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/categorias/{{categoria_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "categorias",
+                "{{categoria_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reorder",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Blusas\",\r\n    \"slug\": \"blusas\",\r\n    \"descripcion\": null,\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/categorias/reorder",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "categorias",
+                "reorder"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Modificadores",
+      "item": [
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"modificador_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Andina\",\r\n    \"precio\": null,\r\n    \"maximo\": 1,\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/modificadores",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "modificadores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Ají\",\r\n    \"precio\": null,\r\n    \"maximo\": 0,\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/modificadores/{{modificador_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "modificadores",
+                "{{modificador_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/modificadores",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "modificadores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/modificadores/{{modificador_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "modificadores",
+                "{{modificador_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/modificadores/{{modificador_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "modificadores",
+                "{{modificador_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Grupos Modificadores",
+      "item": [
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"grupo_modificador_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Elige tus cremas\",\r\n    \"descripcion\": \"Escoge las cremas que desees\",\r\n    \"tipo_campo\": \"checkbox\",\r\n    \"obligatorio\": true,\r\n    \"maximo\": 0,\r\n    \"estado\": true,\r\n    \"modificadores_id\": [\r\n        \"fb6f5ea6-77cf-4ebc-a5a8-0c3f227e5c13\",\r\n        \"c3876573-5267-461d-9485-caaa98c97b4f\",\r\n        \"705c08f4-c9dc-4eca-a043-3b4adf703046\",\r\n        \"1a1b24fa-daa9-4d90-a039-fe460fcdb74f\",\r\n        \"f06521a0-714d-453e-8d29-00e886141a0f\"\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/grupos-modificadores",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "grupos-modificadores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Elige tus salsas2\",\r\n    \"descripcion\": \"Selecciona 3 opciones.\",\r\n    \"tipo_campo\": \"checkbox\",\r\n    \"obligatorio\": true,\r\n    \"maximo\": 3,\r\n    \"estado\": false,\r\n    \"modificadores_id\": [\r\n        \"c9e6639b-8fb1-4d08-a092-fc12368e58d1\",\r\n        \"2d06fa2f-c2ad-4ce7-b0ab-cddd9a34ffa0\",\r\n        \"b567b895-e292-4ba9-9ba2-36f0d6503343\"\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/grupos-modificadores/{{grupo_modificador_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "grupos-modificadores",
+                "{{grupo_modificador_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Productos",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productos_id\": [\r\n        \"1fb2d3fa-c312-4ff7-b5eb-0bf055b964f5\",\r\n        \"8ea22ef0-8964-4113-9e87-9be45f13d70a\",\r\n        \"ef414523-ecba-42f2-9d62-de766a1ad94c\"\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/grupos-modificadores/{{grupo_modificador_id}}/asignar-productos",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "grupos-modificadores",
+                "{{grupo_modificador_id}}",
+                "asignar-productos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/grupos-modificadores",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "grupos-modificadores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/grupos-modificadores/{{grupo_modificador_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "grupos-modificadores",
+                "{{grupo_modificador_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/grupos-modificadores/{{grupo_modificador_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "grupos-modificadores",
+                "{{grupo_modificador_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Productos",
+      "item": [
+        {
+          "name": "Cliente",
+          "item": [
+            {
+              "name": "Get All",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dominio}}/productos/empresa/{{slug}}",
+                  "host": [
+                    "{{dominio}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "empresa",
+                    "{{slug}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get By Slug",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{dominio}}/productos/{{slugProducto}}/empresa/{{slug}}",
+                  "host": [
+                    "{{dominio}}"
+                  ],
+                  "path": [
+                    "productos",
+                    "{{slugProducto}}",
+                    "empresa",
+                    "{{slug}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"producto_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"1/2 pollo\",\r\n    \"descripcion\": \"Papas + Ensalada + Cremas\",\r\n    \"sku\": null,\r\n    \"slug\": \"1/2-pollo\",\r\n    \"destacado\": true,\r\n    \"precio\": 26,\r\n    \"precio_costo\": null,\r\n    \"precio_falso\": null,\r\n    \"estado\": true,\r\n    \"estado_tienda\": true,\r\n    \"categoria_id\": \"{{categoria_id}}\",\r\n    \"marca_id\": null,\r\n    \"tipo_producto\": \"basico\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/productos",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "productos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Clásica\",\r\n    \"descripcion\": \"Carne o pollo, papitas al hilo, lechuga, tomate, pepino y cremas\",\r\n    \"sku\": null,\r\n    \"slug\": \"hamburguesa-clasica\",\r\n    \"destacado\": true,\r\n    \"precio\": 10,\r\n    \"precio_costo\": null,\r\n    \"precio_falso\": null,\r\n    \"estado\": true,\r\n    \"estado_tienda\": true,\r\n    \"categoria_id\": \"{{categoria_id}}\",\r\n    \"marca_id\": null,\r\n    \"tipo_producto\": \"basico\",\r\n    \"atributos\": null,\r\n    \"variantes\": null\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/productos/{{producto_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "productos",
+                "{{producto_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{dominio}}/productos",
+              "host": [
+                "{{dominio}}"
+              ],
+              "path": [
+                "productos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get ProductoByID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/productos/{{producto_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "productos",
+                "{{producto_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete ProductoByID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/productos/{{producto_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "productos",
+                "{{producto_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Anuncios",
+      "item": [
+        {
+          "name": "Cliente",
+          "item": [
+            {
+              "name": "GetAll",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dominio}}/anuncios/empresa/{{slug}}",
+                  "host": [
+                    "{{dominio}}"
+                  ],
+                  "path": [
+                    "anuncios",
+                    "empresa",
+                    "{{slug}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"anuncio_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"titulo\": \"Promoción de Verano Exclusiva 2\",\r\n    \"url\": \"https://tusitio.com/oferta-verano\",\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/anuncios",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "anuncios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"titulo\": \"Promoción de Verano Exclusiva\",\r\n    \"url\": \"https://tusitio.com/oferta-2\",\r\n    \"estado\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/anuncios/{{anuncio_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "anuncios",
+                "{{anuncio_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/anuncios",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "anuncios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/anuncios/{{anuncio_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "anuncios",
+                "{{anuncio_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/anuncios/{{anuncio_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "anuncios",
+                "{{anuncio_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Método de pago",
+      "item": [
+        {
+          "name": "Cliente",
+          "item": [
+            {
+              "name": "GetBySlug",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{dominio}}/metodos-pago/empresa/{{slug}}",
+                  "host": [
+                    "{{dominio}}"
+                  ],
+                  "path": [
+                    "metodos-pago",
+                    "empresa",
+                    "{{slug}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"metodo_pago_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre_banco\": \"YAPE\",\r\n    \"descripcion\": \"Escanea el código QR o Yapea al número en pantalla\",\r\n    \"numero_cuenta\": \"949992147\",\r\n    \"nombre_cuenta\": \"Manuel Peves Livia\",\r\n    \"ruc\": \"10765643959\",\r\n    \"tipo\": \"manual\",\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/metodos-pago",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "metodos-pago"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre_banco\": \"YAPE\",\r\n    \"descripcion\": \"Escanea el código QR o Yapea al número en pantalla\",\r\n    \"numero_cuenta\": \"949992147\",\r\n    \"nombre_cuenta\": \"Manuel Peves Livia\",\r\n    \"ruc\": \"10765643959\",\r\n    \"tipo\": \"manual\",\r\n    \"estado\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/metodos-pago/{{metodo_pago_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "metodos-pago",
+                "{{metodo_pago_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/metodos-pago",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "metodos-pago"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetByID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/metodos-pago/{{metodo_pago_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "metodos-pago",
+                "{{metodo_pago_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/metodos-pago/{{metodo_pago_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "metodos-pago",
+                "{{metodo_pago_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Imágenes e Imágenes Relacionadas",
+      "item": [
+        {
+          "name": "Uploads Files",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"imagen_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "files",
+                  "type": "file",
+                  "uuid": "72b18b7e-227b-4c0e-9f9d-9a042443d389",
+                  "src": "/C:/Users/Usuario/Downloads/hero.png"
+                },
+                {
+                  "key": "files",
+                  "type": "file",
+                  "uuid": "2dd6433e-1bc6-41fb-8e72-d9ddbfb3ce63",
+                  "src": "/C:/Users/Usuario/Downloads/nosotros.jpeg"
+                },
+                {
+                  "key": "files",
+                  "type": "file",
+                  "uuid": "8bca809c-5a82-466a-9bfa-82e0593ec5b0",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{url}}/imagenes/uploads",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "imagenes",
+                "uploads"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Vinculate Relacionadas Files",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const data = JSON.parse(responseBody);\r",
+                  "postman.setGlobalVariable(\"imagen_id\", data.result.id)"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"entidad_id\": \"{{metodo_pago_id}}\",\r\n    \"entidad_tipo\": \"metodo_pago\",\r\n    \"imagenes_relacionadas\": [\r\n        {\r\n            \"id\": \"2575744c-9cff-4573-b8ce-55cccf80ac3a\",\r\n            \"orden\": 1\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/imagenes/vinculate",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "imagenes",
+                "vinculate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/imagenes",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "imagenes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/imagenes/{{imagen_id}}",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "imagenes",
+                "{{imagen_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Otros",
+      "item": [
+        {
+          "name": "Atributos Valores",
+          "item": [
+            {
+              "name": "Create",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"producto_id\": \"{{producto_id}}\",\r\n    \"atributo_id\": \"{{atributo_id}}\",\r\n    \"valor\": \"XS\",\r\n    \"orden\": 3,\r\n    \"estado\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/atributos-valor",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "atributos-valor"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Marcas",
+          "item": [
+            {
+              "name": "Create",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const data = JSON.parse(responseBody);\r",
+                      "postman.setGlobalVariable(\"marca_id\", data.result.id)"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nombre\": \"Gucci\",\r\n    \"estado\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/marcas",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "marcas"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nombre\": \"New Sport\",\r\n    \"estado\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/marcas/{{marca_id}}",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "marcas",
+                    "{{marca_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GetAll",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/marcas",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "marcas"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GetByID",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/marcas/{{marca_id}}",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "marcas",
+                    "{{marca_id}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{url}}/marcas/{{marca_id}}",
+                  "host": [
+                    "{{url}}"
+                  ],
+                  "path": [
+                    "marcas",
+                    "{{marca_id}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": "http://localhost:3000/api"
+    },
+    {
+      "key": "usuario",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "correo",
+      "value": "admin@gmail.com"
+    },
+    {
+      "key": "empresaId",
+      "value": "55d8be5a-1fa4-44ae-a6cf-185eeeecbb8d"
+    },
+    {
+      "key": "slug",
+      "value": ""
+    },
+    {
+      "key": "rol_id",
+      "value": ""
+    },
+    {
+      "key": "marca_id",
+      "value": "d75ab3a9-d73c-49fa-b7f4-bacdddd7dad1"
+    },
+    {
+      "key": "atributo_id",
+      "value": ""
+    },
+    {
+      "key": "empresa_id",
+      "value": ""
+    },
+    {
+      "key": "dominio",
+      "value": ""
+    }
+  ]
+}

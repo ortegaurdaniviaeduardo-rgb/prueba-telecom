@@ -164,9 +164,23 @@ function AppLayout() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const timer = setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [location.hash, location.pathname]);
+
   const navLinks = [
     { name: 'Inicio', path: '/' },
     { name: 'Catálogo', path: '/catalogo', hasDropdown: true },
+    { name: 'Ganadores', path: '/', hash: 'ganadores' },
     { name: 'Nosotros', path: '/nosotros' }
   ];
 
@@ -191,11 +205,14 @@ function AppLayout() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
+              const isActive = link.hash
+                ? location.pathname === link.path && location.hash === `#${link.hash}`
+                : location.pathname === link.path && !location.hash;
               return (
                 <div key={link.name} className="relative group px-2 py-1">
                   <Link
                     to={link.path}
+                    hash={link.hash}
                     className={`relative z-10 px-4 py-2 font-semibold text-sm transition-colors duration-300 flex items-center gap-1 ${
                       isActive ? 'text-white' : 'text-white/70 hover:text-white'
                     }`}
@@ -279,6 +296,7 @@ function AppLayout() {
                   <div key={link.name} className="space-y-2">
                     <Link
                       to={link.path}
+                      hash={link.hash}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="block py-2 text-white/80 hover:text-white font-bold text-lg"
                     >
@@ -352,6 +370,7 @@ function AppLayout() {
               <ul className="space-y-3 text-sm">
                 <li><Link to="/" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Inicio</Link></li>
                 <li><Link to="/catalogo" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Catálogo de Equipos</Link></li>
+                <li><Link to="/" hash="ganadores" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Ganadores</Link></li>
                 <li><Link to="/nosotros" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Sobre Nosotros</Link></li>
                 <li><Link to="/carrito" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Tu Carrito</Link></li>
               </ul>

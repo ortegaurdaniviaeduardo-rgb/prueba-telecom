@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Product } from '@/lib/data';
+import { Product, products as mockProducts } from '@/lib/data';
 
 const API_BASE = 'https://api.flyup.rest/api/v1';
 
@@ -104,7 +104,7 @@ export function useProductsQuery() {
       const data = await res.json();
       const rawProducts: ApiProduct[] = data.result || [];
       
-      return rawProducts
+      const apiMappedProducts = rawProducts
         .filter(p => p.nombre) // Safety filter
         .map(p => {
           const brandName = p.categoria?.nombre || 'General';
@@ -127,6 +127,16 @@ export function useProductsQuery() {
             dateAdded: p.created_at || new Date().toISOString()
           };
         });
+
+      const apiProductsNormalizedNames = new Set(
+        apiMappedProducts.map(p => p.name.trim().toLowerCase())
+      );
+      
+      const filteredMockProducts = mockProducts.filter(
+        mp => !apiProductsNormalizedNames.has(mp.name.trim().toLowerCase())
+      );
+
+      return [...apiMappedProducts, ...filteredMockProducts];
     },
     staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });

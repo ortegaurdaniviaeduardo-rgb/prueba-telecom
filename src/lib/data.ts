@@ -265,5 +265,40 @@ export const testimonials: Testimonial[] = [
     text: "Pensé que sería difícil sacar a crédito, pero fue muy rápido.",
     rating: 5,
     image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.55-AM-(1).jpeg"
+  },
+  {
+    id: 6,
+    name: "Lucía Torres",
+    text: "Súper recomendado, me dieron facilidad de cuotas y un excelente celular.",
+    rating: 5,
+    image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.53-AM-(1).jpeg"
+  },
+  {
+    id: 7,
+    name: "Miguel Angel",
+    text: "Rápido y confiable. El trato por WhatsApp fue muy amable y directo.",
+    rating: 5,
+    image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.53-AM-(2).jpeg"
+  },
+  {
+    id: 8,
+    name: "Elena Rodríguez",
+    text: "Excelente atención. Mi equipo llegó en perfectas condiciones y sellado.",
+    rating: 5,
+    image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.54-AM-(2).jpeg"
+  },
+  {
+    id: 9,
+    name: "José Luis",
+    text: "La mejor opción para sacar celular a crédito. Todo fue transparente.",
+    rating: 4,
+    image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.54-AM-(3).jpeg"
+  },
+  {
+    id: 10,
+    name: "Patricia Rivas",
+    text: "Muy contenta con mi compra, el proceso fue súper sencillo.",
+    rating: 5,
+    image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.55-AM.jpeg"
   }
 ];
