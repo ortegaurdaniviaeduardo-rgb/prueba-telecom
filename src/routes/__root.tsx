@@ -191,8 +191,14 @@ function AppLayout() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-          scrolled ? 'bg-[#1B1857]/95 backdrop-blur-xl shadow-2xl py-2' : 'bg-[#1B1857] py-4'
+        className={`z-50 w-full transition-all duration-300 ${
+          location.pathname === '/' ? 'fixed' : 'sticky'
+        } top-0 ${
+          scrolled
+            ? 'bg-[#1B1857]/90 backdrop-blur-md shadow-2xl py-2'
+            : location.pathname === '/'
+            ? 'bg-transparent py-4'
+            : 'bg-[#1B1857] py-4'
         }`}
       >
         <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between">

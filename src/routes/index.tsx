@@ -36,38 +36,33 @@ function Index() {
   return (
     <div className="flex flex-col bg-[#FFFBFB]">
       {/* 1. PORTADA: Carrusel de imágenes de portada */}
-      <section className="w-full bg-[#1B1857] relative">
-        {/* Background Decorative Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-1/2 -right-1/4 w-[1000px] h-[1000px] bg-[#00BAA2] rounded-full mix-blend-multiply filter blur-[150px] opacity-20 animate-pulse"></div>
-          <div className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] bg-[#00A886] rounded-full mix-blend-multiply filter blur-[120px] opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-
-        <div className="container mx-auto px-0 md:px-4 py-0 md:py-8 relative z-10">
-          {isLoadingSlides ? (
-            <div className="w-full max-w-[1400px] mx-auto h-[40vh] md:h-[60vh] bg-slate-800/10 rounded-3xl flex items-center justify-center">
-              <Loader2 className="w-10 h-10 text-[#00BAA2] animate-spin" />
-            </div>
-          ) : (
-            <Carousel className="w-full max-w-[1400px] mx-auto rounded-none md:rounded-3xl overflow-hidden shadow-2xl" opts={{ loop: true }}>
-              <CarouselContent>
-                {heroSlides.map((slide, index) => (
-                  <CarouselItem key={index}>
-                    <div className="relative w-full aspect-[5000/2813] overflow-hidden bg-[#1B1857]">
-                      <img
-                        src={slide}
-                        alt={`Portada promocional ${index + 1}`}
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-4 bg-white/20 hover:bg-white/90 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all" />
-              <CarouselNext className="right-4 bg-white/20 hover:bg-white/90 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all" />
-            </Carousel>
-          )}
-        </div>
+      {/* 1. PORTADA: Carrusel de imágenes de portada */}
+      <section className="w-full h-[65vh] sm:h-[80vh] md:h-screen relative overflow-hidden bg-[#1B1857]">
+        {isLoadingSlides ? (
+          <div className="w-full h-full bg-slate-800/10 flex items-center justify-center">
+            <Loader2 className="w-12 h-12 text-[#00BAA2] animate-spin" />
+          </div>
+        ) : (
+          <Carousel className="w-full h-full relative" opts={{ loop: true }}>
+            <CarouselContent className="h-full ml-0">
+              {heroSlides.map((slide, index) => (
+                <CarouselItem key={index} className="h-full pl-0">
+                  <div className="relative w-full h-full overflow-hidden bg-[#1B1857]">
+                    <img
+                      src={slide}
+                      alt={`Portada promocional ${index + 1}`}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    {/* Shadow overlay to ensure text legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/45 pointer-events-none" />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-4 bg-white/20 hover:bg-white/95 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all z-20" />
+            <CarouselNext className="right-4 bg-white/20 hover:bg-white/95 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all z-20" />
+          </Carousel>
+        )}
       </section>
 
       {/* 2. CATÁLOGO DESTACADOS */}
