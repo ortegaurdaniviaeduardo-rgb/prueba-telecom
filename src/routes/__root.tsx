@@ -228,14 +228,13 @@ function AppLayout() {
                       />
                     )}
                   </Link>
-
-                  {/* Dropdown for Catálogo */}
+                  
                   {link.hasDropdown && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50">
                       <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 min-w-[200px] flex flex-col relative before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:border-8 before:border-transparent before:border-b-white">
                         <Link to="/catalogo" className="px-4 py-2.5 text-sm font-bold text-[#1B1857] hover:bg-slate-50 rounded-xl transition-colors">Ver todo el catálogo</Link>
                         <div className="h-px bg-slate-100 my-1 mx-2"></div>
-                        {categories.filter(c => c !== "Todas").slice(0, 5).map(cat => (
+                        {categories.filter(c => c !== "Todas").map(cat => (
                           <Link 
                             key={cat}
                             to="/catalogo" 
@@ -304,7 +303,7 @@ function AppLayout() {
                     </Link>
                     {link.hasDropdown && (
                       <div className="pl-4 grid grid-cols-2 gap-2 pb-2">
-                        {categories.slice(0, 5).map(cat => (
+                        {categories.filter(c => c !== "Todas").map(cat => (
                           <Link
                             key={cat}
                             to="/catalogo"
