@@ -14,13 +14,17 @@ if (!email || !password) {
 const API_BASE = 'https://api.flyup.rest/api/v1';
 const SLUG_EMPRESA = 'telecom-bl';
 
+// Use process.cwd() which should be the project root when running "node src/scripts/seed.cjs"
+// This is more reliable on Windows than __dirname-based paths
+const PROJECT_ROOT = process.cwd();
+
 // Mock products data inlined from src/lib/data.ts
 const productsToSeed = [
   {
     name: "iPhone 13",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0001.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0001.jpg",
     features: ["Pantalla 6.1\"", "Cámara Dual 12MP", "Chip A15 Bionic"],
     isFeatured: true
   },
@@ -28,7 +32,7 @@ const productsToSeed = [
     name: "iPhone 14",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0002.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0002.jpg",
     features: ["Pantalla 6.1\"", "Cámara Dual 12MP", "Chip A15 Bionic"],
     isFeatured: true
   },
@@ -36,7 +40,7 @@ const productsToSeed = [
     name: "iPhone 15",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0003.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0003.jpg",
     features: ["Pantalla 6.1\"", "Cámara 48MP", "Chip A16 Bionic"],
     isFeatured: true
   },
@@ -44,7 +48,7 @@ const productsToSeed = [
     name: "iPhone 15 Pro",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0004.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0004.jpg",
     features: ["Pantalla 6.1\"", "Cámara 48MP", "Chip A17 Pro"],
     isFeatured: true
   },
@@ -52,7 +56,7 @@ const productsToSeed = [
     name: "iPhone 15 Pro Max",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0005.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0005.jpg",
     features: ["Pantalla 6.7\"", "Cámara 48MP", "Chip A17 Pro"],
     isFeatured: true
   },
@@ -60,7 +64,7 @@ const productsToSeed = [
     name: "iPhone 16",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0006.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0006.jpg",
     features: ["Pantalla 6.1\"", "Cámara 48MP", "Chip A18"],
     isFeatured: true
   },
@@ -68,7 +72,7 @@ const productsToSeed = [
     name: "iPhone 16 Pro",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0007.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0007.jpg",
     features: ["Pantalla 6.3\"", "Cámara 48MP", "Chip A18 Pro"],
     isFeatured: false
   },
@@ -76,7 +80,7 @@ const productsToSeed = [
     name: "iPhone 16 Pro Max",
     brand: "Apple",
     category: "iPhone",
-    image: "/celulares/CELULARES-62-PAG_page-0008.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0008.jpg",
     features: ["Pantalla 6.9\"", "Cámara 48MP", "Chip A18 Pro"],
     isFeatured: false
   },
@@ -84,7 +88,7 @@ const productsToSeed = [
     name: "Samsung Galaxy S24",
     brand: "Samsung",
     category: "Samsung",
-    image: "/celulares/CELULARES-62-PAG_page-0009.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0009.jpg",
     features: ["Pantalla 6.2\"", "Cámara 50MP", "Galaxy AI"],
     isFeatured: false
   },
@@ -92,7 +96,7 @@ const productsToSeed = [
     name: "Samsung Galaxy S24 Ultra",
     brand: "Samsung",
     category: "Samsung",
-    image: "/celulares/CELULARES-62-PAG_page-0010.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0010.jpg",
     features: ["Pantalla 6.8\"", "Cámara 200MP", "S Pen incluido"],
     isFeatured: true
   },
@@ -100,7 +104,7 @@ const productsToSeed = [
     name: "Samsung Galaxy A54",
     brand: "Samsung",
     category: "Samsung",
-    image: "/celulares/CELULARES-62-PAG_page-0011.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0011.jpg",
     features: ["Pantalla 6.4\"", "Cámara 50MP", "Batería 5000mAh"],
     isFeatured: false
   },
@@ -108,7 +112,7 @@ const productsToSeed = [
     name: "Samsung Galaxy A34",
     brand: "Samsung",
     category: "Samsung",
-    image: "/celulares/CELULARES-62-PAG_page-0012.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0012.jpg",
     features: ["Pantalla 6.6\"", "Cámara 48MP", "Batería 5000mAh"],
     isFeatured: false
   },
@@ -116,7 +120,7 @@ const productsToSeed = [
     name: "Xiaomi Redmi Note 13 Pro",
     brand: "Xiaomi",
     category: "Xiaomi",
-    image: "/celulares/CELULARES-62-PAG_page-0013.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0013.jpg",
     features: ["Pantalla 6.67\"", "Cámara 200MP", "Batería 5100mAh"],
     isFeatured: false
   },
@@ -124,7 +128,7 @@ const productsToSeed = [
     name: "Xiaomi 14 Ultra",
     brand: "Xiaomi",
     category: "Xiaomi",
-    image: "/celulares/CELULARES-62-PAG_page-0014.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0014.jpg",
     features: ["Pantalla 6.73\"", "Cámara Leica 50MP", "Snapdragon 8 Gen 3"],
     isFeatured: false
   },
@@ -132,7 +136,7 @@ const productsToSeed = [
     name: "Motorola Edge 40",
     brand: "Motorola",
     category: "Motorola",
-    image: "/celulares/CELULARES-62-PAG_page-0015.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0015.jpg",
     features: ["Pantalla 6.55\"", "Cámara 50MP", "Carga rápida 68W"],
     isFeatured: false
   },
@@ -140,7 +144,7 @@ const productsToSeed = [
     name: "Motorola Moto G84",
     brand: "Motorola",
     category: "Motorola",
-    image: "/celulares/CELULARES-62-PAG_page-0016.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0016.jpg",
     features: ["Pantalla 6.55\"", "Cámara 50MP", "Batería 5000mAh"],
     isFeatured: false
   },
@@ -148,7 +152,7 @@ const productsToSeed = [
     name: "Oppo Reno 11",
     brand: "Oppo",
     category: "Oppo / Infinix",
-    image: "/celulares/CELULARES-62-PAG_page-0017.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0017.jpg",
     features: ["Pantalla 6.7\"", "Cámara 50MP", "Carga rápida 67W"],
     isFeatured: false
   },
@@ -156,7 +160,7 @@ const productsToSeed = [
     name: "Infinix Note 50 Pro",
     brand: "Infinix",
     category: "Oppo / Infinix",
-    image: "/celulares/CELULARES-62-PAG_page-0018.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0018.jpg",
     features: ["Pantalla 6.78\"", "Cámara 108MP", "8GB RAM"],
     isFeatured: false
   },
@@ -164,7 +168,7 @@ const productsToSeed = [
     name: "Honor Magic 6 Pro",
     brand: "Honor",
     category: "Honor",
-    image: "/celulares/CELULARES-62-PAG_page-0019.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0019.jpg",
     features: ["Pantalla 6.78\"", "Cámara 50MP", "Snapdragon 8 Gen 3"],
     isFeatured: false
   },
@@ -172,7 +176,7 @@ const productsToSeed = [
     name: "ZTE Blade A54",
     brand: "ZTE",
     category: "ZTE",
-    image: "/celulares/CELULARES-62-PAG_page-0020.jpg",
+    image: "celulares/CELULARES-62-PAG_page-0020.jpg",
     features: ["Pantalla 6.6\"", "Cámara 13MP", "4GB RAM"],
     isFeatured: false
   }
@@ -181,7 +185,6 @@ const productsToSeed = [
 // Helper to normalize and check string matching
 function getCategoryMatch(existingCats, targetName) {
   const norm = targetName.toLowerCase().trim();
-  // Try direct match or plural/singular variations (e.g. iphone vs iphones, samsung vs samsungs)
   return existingCats.find(c => {
     const cName = c.nombre.toLowerCase().trim();
     return cName === norm || 
@@ -203,6 +206,14 @@ function slugify(text) {
 async function main() {
   try {
     console.log('\x1b[36m=== INICIANDO SUBIDA AUTOMÁTICA DE DATOS A FLYUP ===\x1b[0m\n');
+    console.log(`📂 Directorio del proyecto: ${PROJECT_ROOT}`);
+
+    // Verify images folder exists
+    const celularesDir = path.join(PROJECT_ROOT, 'public', 'celulares');
+    if (!fs.existsSync(celularesDir)) {
+      throw new Error(`No se encontró la carpeta de imágenes: ${celularesDir}`);
+    }
+    console.log(`✔ Carpeta de imágenes encontrada: ${celularesDir}\n`);
 
     // 1. Login
     console.log('🔐 Iniciando sesión...');
@@ -242,13 +253,9 @@ async function main() {
     const existingProducts = prodsData.result || [];
     console.log(`✔ Se encontraron ${existingProducts.length} productos en el panel.\n`);
 
-    // Set to index existing products by lowercase name
-    const existingProductNames = new Set(existingProducts.map(p => p.nombre.toLowerCase().trim()));
-
     // 4. Ensure all categories exist
-    const categoryMap = {}; // Maps mock category name -> API category ID
+    const categoryMap = {};
     
-    // Fill in maps for existing categories
     for (const prod of productsToSeed) {
       if (categoryMap[prod.category]) continue;
       
@@ -257,7 +264,6 @@ async function main() {
         categoryMap[prod.category] = match.id;
         console.log(`✔ Categoría mapeada: "${prod.category}" -> "${match.nombre}" (ID: ${match.id})`);
       } else {
-        // Create new category
         console.log(`➕ Creando nueva categoría: "${prod.category}"...`);
         const newCatRes = await fetch(`${API_BASE}/categorias`, {
           method: 'POST',
@@ -284,7 +290,6 @@ async function main() {
         categoryMap[prod.category] = newCatId;
         console.log(`\x1b[32m✔ Categoría creada: "${prod.category}" (ID: ${newCatId})\x1b[0m`);
         
-        // Add to existing list
         existingCategories.push({
           id: newCatId,
           nombre: prod.category,
@@ -296,13 +301,16 @@ async function main() {
 
     // 5. Seed products
     for (const prod of productsToSeed) {
-      const apiProd = existingProducts.find(p => p.nombre.toLowerCase().trim() === prod.name.toLowerCase().trim());
+      // Match by lowercase name
+      const apiProd = existingProducts.find(
+        p => p.nombre.toLowerCase().trim() === prod.name.toLowerCase().trim()
+      );
       
       let productId = apiProd?.id;
-      const needsImage = !apiProd || !apiProd.imagenes_relacionadas || apiProd.imagenes_relacionadas.length === 0;
+      const hasImage = apiProd && apiProd.imagenes_relacionadas && apiProd.imagenes_relacionadas.length > 0;
 
-      if (apiProd && !needsImage) {
-        console.log(`⏭ Saltando "${prod.name}" (ya existe y tiene imagen vinculada)`);
+      if (hasImage) {
+        console.log(`⏭ Saltando "${prod.name}" (ya tiene imagen vinculada)`);
         continue;
       }
 
@@ -360,10 +368,12 @@ async function main() {
         console.log(`  ℹ El producto ya existe (ID: ${productId}), procediendo a subir y vincular su imagen.`);
       }
 
-      // Upload and link image if needed
-      if (productId && needsImage) {
+      // Upload and link image
+      if (productId) {
         let uploadedImageId = null;
-        const localImagePath = path.join(__dirname, '../../public', prod.image);
+        // Build path from project root
+        const localImagePath = path.join(PROJECT_ROOT, 'public', prod.image);
+        console.log(`  📁 Buscando imagen en: ${localImagePath}`);
 
         if (fs.existsSync(localImagePath)) {
           try {
@@ -389,54 +399,58 @@ async function main() {
             }
 
             const uploadData = await uploadRes.json();
+            console.log(`  📤 Respuesta de upload:`, JSON.stringify(uploadData).substring(0, 200));
             uploadedImageId = Array.isArray(uploadData.result) ? uploadData.result[0]?.id : uploadData.result?.id;
             console.log(`  ✔ Imagen subida con ID: ${uploadedImageId}`);
           } catch (imgError) {
-            console.error(`  \x1b[33m⚠ Advertencia al subir imagen para "${prod.name}": ${imgError.message}\x1b[0m`);
+            console.error(`  \x1b[31m✘ Error al subir imagen para "${prod.name}": ${imgError.message}\x1b[0m`);
           }
         } else {
-          console.warn(`  \x1b[33m⚠ No se encontró archivo local en: ${localImagePath}\x1b[0m`);
+          console.error(`  \x1b[31m✘ Archivo NO encontrado: ${localImagePath}\x1b[0m`);
         }
 
         // Link image to product
         if (uploadedImageId) {
           try {
-            console.log(`  🔗 Vinculando imagen al producto...`);
+            console.log(`  🔗 Vinculando imagen ${uploadedImageId} al producto ${productId}...`);
+            const linkPayload = {
+              entidad_id: productId,
+              entidad_tipo: 'producto',
+              imagenes_relacionadas: [
+                {
+                  id: uploadedImageId,
+                  orden: 1
+                }
+              ]
+            };
+            console.log(`  📤 Payload vinculate:`, JSON.stringify(linkPayload));
+            
             const linkRes = await fetch(`${API_BASE}/imagenes/vinculate`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
               },
-              body: JSON.stringify({
-                entidad_id: productId,
-                entidad_tipo: 'producto',
-                imagenes_relacionadas: [
-                  {
-                    id: uploadedImageId,
-                    orden: 1
-                  }
-                ]
-              })
+              body: JSON.stringify(linkPayload)
             });
 
+            const linkText = await linkRes.text();
             if (!linkRes.ok) {
-              const errText = await linkRes.text();
-              console.error(`  \x1b[31m✘ Error al vincular imagen: ${errText}\x1b[0m`);
+              console.error(`  \x1b[31m✘ Error al vincular imagen (${linkRes.status}): ${linkText}\x1b[0m`);
             } else {
-              console.log(`  ✔ Imagen vinculada correctamente!`);
+              console.log(`  \x1b[32m✔ Imagen vinculada correctamente! Respuesta: ${linkText.substring(0, 150)}\x1b[0m`);
             }
           } catch (linkErr) {
             console.error(`  \x1b[31m✘ Excepción al vincular imagen: ${linkErr.message}\x1b[0m`);
           }
         }
       }
-      console.log(`\x1b[32m✔ Procesado completo para: "${prod.name}"\x1b[0m\n`);
+      console.log(`\x1b[32m✔ Procesado: "${prod.name}"\x1b[0m\n`);
     }
 
-    console.log('\n\x1b[32;1m=== PROCESO DE SUBIDA COMPLETADO CON ÉXITO ===\x1b[0m');
+    console.log('\n\x1b[32;1m=== PROCESO DE SUBIDA COMPLETADO ===\x1b[0m');
   } catch (error) {
-    console.error('\n\x1b[31;1m✘ ERROR GENERAL EN EL PROCESO DE SUBIDA:\x1b[0m', error.message);
+    console.error('\n\x1b[31;1m✘ ERROR GENERAL:\x1b[0m', error.message);
     process.exit(1);
   }
 }

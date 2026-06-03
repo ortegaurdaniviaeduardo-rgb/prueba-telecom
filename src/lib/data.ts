@@ -4,6 +4,8 @@ export type Product = {
   brand: string;
   category: string;
   image: string;
+  images?: string[];   // All product images (for gallery)
+  slug?: string;       // URL-friendly identifier
   features: string[];
   isFeatured: boolean;
   dateAdded: string; // ISO date string for filtering

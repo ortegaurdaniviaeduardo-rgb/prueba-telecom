@@ -47,9 +47,12 @@ export interface ApiProduct {
   id: string;
   nombre: string;
   descripcion: string;
+  slug: string;
   destacado: boolean;
+  precio: number;
   categoria: ApiCategory;
   imagenes_relacionadas: ApiProductImage[];
+  atributos: { nombre: string; valor: string }[];
   created_at: string;
 }
 
@@ -122,8 +125,10 @@ export function useProductsQuery() {
             brand: brandName,
             category: brandName,
             image: imageUrl,
+            images: p.imagenes_relacionadas?.map(img => img.url) || [imageUrl],
             features: features,
             isFeatured: !!p.destacado,
+            slug: p.slug || p.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
             dateAdded: p.created_at || new Date().toISOString()
           };
         });
@@ -151,5 +156,19 @@ export function useCategoriesQuery() {
       return ['Todas', ...Array.from(cats)];
     },
     enabled: products.length > 0
+  });
+}
+
+export function useProductBySlugQuery(slug: string) {
+  return useQuery<ApiProduct | null>({
+    queryKey: ['api-product-slug', slug],
+    queryFn: async () => {
+      const res = await fetch(`${API_BASE}/productos/slug/${slug}`);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.result || null;
+    },
+    staleTime: 1000 * 60 * 5,
+    enabled: !!slug,
   });
 }
