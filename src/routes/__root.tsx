@@ -121,20 +121,34 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-import { ShoppingCart, Phone, ChevronDown, Menu, X } from "lucide-react";
+import { ShoppingCart, Phone, ChevronDown, Menu, X, Loader2 } from "lucide-react";
 import { useCart } from "../hooks/useCart";
 import { useState } from "react";
-import { categories } from "../lib/data";
+import { useCategoriesQuery, useCompanyQuery } from "../hooks/useApi";
 import { motion, AnimatePresence } from "framer-motion";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const { data: company } = useCompanyQuery();
+  const { data: categories = [] } = useCategoriesQuery();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const items = useCart((state) => state.items);
   // Ensure we safely get the items count whether it's an array or an object method
   const itemsCount = items ? items.reduce((sum: number, item: any) => sum + item.quantity, 0) : useCart((state: any) => state.getItemsCount?.() || 0);
   const location = useLocation();
+
+  // Format WhatsApp phone number (Peru format)
+  const rawPhone = company?.whatsapp || company?.celular || "900276190";
+  const formattedPhone = rawPhone.replace(/\D/g, "");
+  const whatsappNumber = formattedPhone.length === 9 && formattedPhone.startsWith("9") 
+    ? `51${formattedPhone}` 
+    : formattedPhone;
+
+  const brandName = company?.nombre_marca || "Telecom BL";
+  const legalName = company?.nombre_legal || "TELECOMUNICACIONES PERU B.L.";
+  const logoUrl = company?.imagen_relacionada?.url || "/logo.png";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -171,7 +185,7 @@ function RootComponent() {
           <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex flex-col relative group z-50">
-              <img src="/logo.png" alt="Telecom BL" className="h-14 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+              <img src={logoUrl} alt={brandName} className="h-14 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
               <span className="text-[8px] md:text-[9px] text-[#00BAA2] font-black tracking-[0.2em] absolute -bottom-4 md:-bottom-5 left-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">TU TECNOLOGÍA A CRÉDITO</span>
             </Link>
 
@@ -320,7 +334,7 @@ function RootComponent() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
               <div className="md:col-span-2 space-y-6">
                 <div className="inline-block transition-transform hover:scale-105 duration-300">
-                  <img src="/logo.png" alt="Telecom BL" className="h-16 md:h-24 w-auto object-contain" />
+                  <img src={logoUrl} alt={brandName} className="h-16 md:h-24 w-auto object-contain" />
                 </div>
                 <p className="text-white/60 leading-relaxed max-w-md text-sm">
                   Tu mejor opción para renovar tu equipo. Te ofrecemos crédito rápido, fácil, sin inicial y 100% transparente para que estés siempre conectado.
@@ -355,7 +369,7 @@ function RootComponent() {
             </div>
             
             <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-white/50 text-xs">&copy; {new Date().getFullYear()} TELECOMUNICACIONES PERU B.L. Todos los derechos reservados.</p>
+              <p className="text-white/50 text-xs">&copy; {new Date().getFullYear()} {legalName}. Todos los derechos reservados.</p>
               <div className="flex gap-4 text-white/50 text-xs">
                 <a href="#" className="hover:text-white transition-colors">Términos y Condiciones</a>
                 <a href="#" className="hover:text-white transition-colors">Políticas de Privacidad</a>
@@ -366,7 +380,7 @@ function RootComponent() {
 
         {/* Floating WhatsApp Button */}
         <a
-          href="https://wa.me/51999999999?text=Hola,%20quisiera%20más%20información%20sobre%20los%20celulares%20a%20crédito."
+          href={`https://wa.me/${whatsappNumber}?text=Hola,%20quisiera%20más%20información%20sobre%20los%20celulares%20a%20crédito.`}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 right-6 bg-[#25D366] hover:bg-[#20bd5a] text-white p-4 rounded-full shadow-[0_8px_30px_rgb(37,211,102,0.4)] transition-all duration-300 hover:scale-110 hover:-translate-y-1 z-50 flex items-center justify-center group"

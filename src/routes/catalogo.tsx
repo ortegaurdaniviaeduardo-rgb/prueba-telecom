@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState, useMemo } from 'react';
-import { products, categories } from '@/lib/data';
+import { useProductsQuery, useCategoriesQuery } from '@/hooks/useApi';
 import { ProductCard } from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
 import { 
@@ -11,7 +11,8 @@ import {
   Star, 
   Camera, 
   Maximize, 
-  ArrowUpDown 
+  ArrowUpDown,
+  Loader2
 } from 'lucide-react';
 
 export const Route = createFileRoute('/catalogo')({
@@ -25,6 +26,9 @@ export const Route = createFileRoute('/catalogo')({
 
 function CatalogoComponent() {
   const { category: urlCategory } = Route.useSearch();
+  const { data: apiProducts = [], isLoading: isLoadingProducts } = useProductsQuery();
+  const { data: categories = [] } = useCategoriesQuery();
+
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(urlCategory || "Todas");
   const [selectedFeatured, setSelectedFeatured] = useState<"all" | "featured">("all");
@@ -34,7 +38,7 @@ function CatalogoComponent() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const filteredProducts = useMemo(() => {
-    let result = products.filter((p) => {
+    let result = apiProducts.filter((p) => {
       const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase()) ||
         p.brand.toLowerCase().includes(search.toLowerCase()) ||
         p.features.some(f => f.toLowerCase().includes(search.toLowerCase()));
@@ -75,7 +79,7 @@ function CatalogoComponent() {
     });
 
     return result;
-  }, [search, selectedCategory, selectedFeatured, selectedCamera, selectedScreen, sortOrder]);
+  }, [apiProducts, search, selectedCategory, selectedFeatured, selectedCamera, selectedScreen, sortOrder]);
 
   const hasActiveFilters = selectedCategory !== "Todas" || selectedFeatured !== "all" || selectedCamera !== "all" || selectedScreen !== "all" || search !== "";
 
@@ -404,34 +408,42 @@ function CatalogoComponent() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-20">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
-        {filteredProducts.length === 0 && (
-          <div className="text-center py-32 bg-white rounded-3xl border border-dashed border-slate-200 mt-6 mb-20">
-            <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Search className="w-10 h-10 text-slate-300" />
-            </div>
-            <h2 className="text-2xl font-bold text-[#1B1857] mb-2">No encontramos celulares</h2>
-            <p className="text-slate-500 max-w-md mx-auto">
-              No hay resultados para "{search}" con los filtros seleccionados. Intenta con otros términos o limpia los filtros.
-            </p>
-            <Button 
-              className="mt-8 bg-[#00BAA2] hover:bg-[#00A886] text-white rounded-xl h-12 px-6"
-              onClick={() => {
-                setSearch("");
-                setSelectedCategory("Todas");
-                setSelectedFeatured("all");
-                setSelectedCamera("all");
-                setSelectedScreen("all");
-              }}
-            >
-              Ver todos los equipos
-            </Button>
+        {isLoadingProducts ? (
+          <div className="flex justify-center items-center py-32 bg-white rounded-3xl border border-slate-100/80 shadow-sm mb-20">
+            <Loader2 className="w-12 h-12 text-[#00BAA2] animate-spin" />
           </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-20">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            {filteredProducts.length === 0 && (
+              <div className="text-center py-32 bg-white rounded-3xl border border-dashed border-slate-200 mt-6 mb-20">
+                <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-10 h-10 text-slate-300" />
+                </div>
+                <h2 className="text-2xl font-bold text-[#1B1857] mb-2">No encontramos celulares</h2>
+                <p className="text-slate-500 max-w-md mx-auto">
+                  No hay resultados para "{search}" con los filtros seleccionados. Intenta con otros términos o limpia los filtros.
+                </p>
+                <Button 
+                  className="mt-8 bg-[#00BAA2] hover:bg-[#00A886] text-white rounded-xl h-12 px-6"
+                  onClick={() => {
+                    setSearch("");
+                    setSelectedCategory("Todas");
+                    setSelectedFeatured("all");
+                    setSelectedCamera("all");
+                    setSelectedScreen("all");
+                  }}
+                >
+                  Ver todos los equipos
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

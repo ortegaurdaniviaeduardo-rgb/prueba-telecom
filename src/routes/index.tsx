@@ -1,18 +1,25 @@
 import * as React from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { products, testimonials, heroSlides } from '@/lib/data';
+import { testimonials } from '@/lib/data';
+import { useProductsQuery, useAnnouncementsQuery } from '@/hooks/useApi';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel';
-import { ArrowRight, ShieldCheck, Zap, Handshake } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Zap, Handshake, Loader2 } from 'lucide-react';
 
 export const Route = createFileRoute('/')({
   component: Index,
 })
 
 function Index() {
-  const featuredProducts = products.filter(p => p.isFeatured).slice(0, 8); // Show up to 8 top sellers
+  const { data: apiProducts = [], isLoading: isLoadingProducts } = useProductsQuery();
+  const { data: heroSlides = [], isLoading: isLoadingSlides } = useAnnouncementsQuery();
+
+  const featuredProducts = React.useMemo(() => {
+    return apiProducts.filter(p => p.isFeatured).slice(0, 8);
+  }, [apiProducts]);
+
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
@@ -37,23 +44,29 @@ function Index() {
         </div>
 
         <div className="container mx-auto px-0 md:px-4 py-0 md:py-8 relative z-10">
-          <Carousel className="w-full max-w-[1400px] mx-auto rounded-none md:rounded-3xl overflow-hidden shadow-2xl" opts={{ loop: true }}>
-            <CarouselContent>
-              {heroSlides.map((slide, index) => (
-                <CarouselItem key={index}>
-                  <div className="relative w-full flex items-center justify-center bg-[#1B1857]">
-                    <img
-                      src={slide}
-                      alt={`Portada promocional ${index + 1}`}
-                      className="w-full h-auto max-h-[70vh] object-contain"
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-4 bg-white/20 hover:bg-white/90 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all" />
-            <CarouselNext className="right-4 bg-white/20 hover:bg-white/90 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all" />
-          </Carousel>
+          {isLoadingSlides ? (
+            <div className="w-full max-w-[1400px] mx-auto h-[40vh] md:h-[60vh] bg-slate-800/10 rounded-3xl flex items-center justify-center">
+              <Loader2 className="w-10 h-10 text-[#00BAA2] animate-spin" />
+            </div>
+          ) : (
+            <Carousel className="w-full max-w-[1400px] mx-auto rounded-none md:rounded-3xl overflow-hidden shadow-2xl" opts={{ loop: true }}>
+              <CarouselContent>
+                {heroSlides.map((slide, index) => (
+                  <CarouselItem key={index}>
+                    <div className="relative w-full flex items-center justify-center bg-[#1B1857]">
+                      <img
+                        src={slide}
+                        alt={`Portada promocional ${index + 1}`}
+                        className="w-full h-auto max-h-[70vh] object-contain"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-4 bg-white/20 hover:bg-white/90 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all" />
+              <CarouselNext className="right-4 bg-white/20 hover:bg-white/90 text-white hover:text-[#1B1857] border-0 w-12 h-12 shadow-lg backdrop-blur-md transition-all" />
+            </Carousel>
+          )}
         </div>
       </section>
 
@@ -72,11 +85,17 @@ function Index() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {isLoadingProducts ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-10 h-10 text-[#00BAA2] animate-spin" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {featuredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
 
           <div className="text-center mt-16">
             <Link to="/catalogo">

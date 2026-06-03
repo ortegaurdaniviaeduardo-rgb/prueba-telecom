@@ -3,6 +3,7 @@ import { useCart } from '@/hooks/useCart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Trash2, Phone, ArrowLeft, Plus, Minus, CheckCircle2 } from 'lucide-react';
+import { useCompanyQuery } from '@/hooks/useApi';
 
 export const Route = createFileRoute('/carrito')({
   component: CarritoComponent,
@@ -11,11 +12,18 @@ export const Route = createFileRoute('/carrito')({
 function CarritoComponent() {
   const { items, removeItem, updateQuantity, clearCart, getItemsCount } = useCart();
   const itemsCount = getItemsCount();
+  const { data: company } = useCompanyQuery();
 
   const handleWhatsApp = () => {
-    const phoneNumber = "51999999999"; // TODO: Update with real phone
+    const rawPhone = company?.whatsapp || company?.celular || "900276190";
+    const formattedPhone = rawPhone.replace(/\D/g, "");
+    const phoneNumber = formattedPhone.length === 9 && formattedPhone.startsWith("9") 
+      ? `51${formattedPhone}` 
+      : formattedPhone;
 
-    let message = "Hola Telecom BL, me interesan estos equipos a crédito:\n\n";
+    const brandName = company?.nombre_marca || "Telecom BL";
+
+    let message = `Hola ${brandName}, me interesan estos equipos a crédito:\n\n`;
     items.forEach(item => {
       message += `- ${item.quantity}x ${item.name} (${item.brand})\n`;
     });
