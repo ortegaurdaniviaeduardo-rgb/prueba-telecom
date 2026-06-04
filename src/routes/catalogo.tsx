@@ -93,9 +93,9 @@ function CatalogoComponent() {
           </div>
 
           {/* Filters Row */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-slate-100">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-3 border-t border-slate-100">
             {/* Brand Pills */}
-            <div className="flex flex-nowrap overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 md:mx-0 md:px-0 items-center gap-2 flex-1 min-w-0">
+            <div className="flex flex-nowrap overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 items-center gap-2 w-full sm:flex-1 sm:min-w-0">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -112,17 +112,19 @@ function CatalogoComponent() {
             </div>
 
             {/* Date Sort Dropdown */}
-            <div className="relative shrink-0">
+            <div className="relative w-full sm:w-auto sm:shrink-0 flex justify-start sm:justify-end">
               <button 
                 onClick={() => setOpenDropdown(openDropdown === "sort" ? null : "sort")}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-[#1B1857] text-sm font-bold transition-all shadow-sm"
+                className="flex items-center justify-between gap-2 w-full sm:w-auto px-4 py-2.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-[#1B1857] text-sm font-bold transition-all shadow-sm"
               >
-                <ArrowUpDown className="w-4 h-4 text-[#00BAA2]" />
-                <span>{sortOrder === "recent" ? "Recientes primero" : "Antiguos primero"}</span>
+                <div className="flex items-center gap-2">
+                  <ArrowUpDown className="w-4 h-4 text-[#00BAA2]" />
+                  <span>{sortOrder === "recent" ? "Recientes primero" : "Antiguos primero"}</span>
+                </div>
                 <ChevronDown className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${openDropdown === "sort" ? "rotate-180" : ""}`} />
               </button>
               {openDropdown === "sort" && (
-                <div className="absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 min-w-[180px] z-30 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="absolute top-full left-0 sm:left-auto sm:right-0 mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 w-full sm:min-w-[180px] z-30 animate-in fade-in slide-in-from-top-2 duration-200">
                   <button
                     onClick={() => {
                       setSortOrder("recent");
