@@ -2,8 +2,9 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useCart } from '@/hooks/useCart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Trash2, Phone, ArrowLeft, Plus, Minus, CheckCircle2 } from 'lucide-react';
+import { Trash2, ArrowLeft, Plus, Minus, CheckCircle2 } from 'lucide-react';
 import { useCompanyQuery } from '@/hooks/useApi';
+import { useState } from 'react';
 
 export const Route = createFileRoute('/carrito')({
   component: CarritoComponent,
@@ -14,7 +15,12 @@ function CarritoComponent() {
   const itemsCount = getItemsCount();
   const { data: company } = useCompanyQuery();
 
-  const handleWhatsApp = () => {
+  const [clientName, setClientName] = useState("");
+  const [clientPhone, setClientPhone] = useState("");
+
+  const handleWhatsApp = (e: React.FormEvent) => {
+    e.preventDefault();
+    
     const rawPhone = company?.whatsapp || company?.celular || "900276190";
     const formattedPhone = rawPhone.replace(/\D/g, "");
     const phoneNumber = formattedPhone.length === 9 && formattedPhone.startsWith("9") 
@@ -27,7 +33,12 @@ function CarritoComponent() {
     items.forEach(item => {
       message += `- ${item.quantity}x ${item.name} (${item.brand})\n`;
     });
-    message += "\nPor favor, indíquenme los requisitos para la evaluación de crédito.";
+    
+    message += `\n*Datos del Cliente:*\n`;
+    message += `- Nombres y Apellidos: ${clientName}\n`;
+    message += `- N° Celular: ${clientPhone}\n\n`;
+    
+    message += "Por favor, indíquenme los requisitos para la evaluación de crédito.";
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
@@ -125,35 +136,65 @@ function CarritoComponent() {
               <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-[0.03]"></div>
               
               <CardContent className="p-8 relative z-10">
-                <h2 className="text-2xl font-bold mb-8 title">Resumen de Evaluación</h2>
+                <form onSubmit={handleWhatsApp} className="space-y-6">
+                  <h2 className="text-2xl font-bold mb-6 title">Resumen de Evaluación</h2>
 
-                <div className="space-y-4 mb-8 text-lg font-light">
-                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10">
-                    <span className="text-white/80">Equipos seleccionados:</span>
-                    <span className="font-bold text-2xl text-[#00BAA2]">{itemsCount}</span>
+                  {/* Input fields for client details */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">Nombres y Apellidos</label>
+                      <input 
+                        type="text" 
+                        placeholder="Ej. Juan Pérez"
+                        className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">N° Celular</label>
+                      <input 
+                        type="tel" 
+                        placeholder="Ej. 987654321"
+                        className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
+                        value={clientPhone}
+                        onChange={(e) => setClientPhone(e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10">
-                    <span className="text-white/80">Costo de evaluación:</span>
-                    <span className="font-bold text-xl text-[#00BAA2]">Gratis</span>
-                  </div>
-                  
-                  <div className="pt-4 px-2">
-                    <p className="text-sm text-white/50 leading-relaxed">
-                      * El plazo y aprobación del crédito están sujetos a la evaluación crediticia que realizaremos por WhatsApp.
-                    </p>
-                  </div>
-                </div>
 
-                <Button
-                  onClick={handleWhatsApp}
-                  className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-[#1B1857] h-16 text-lg font-extrabold shadow-[0_4px_20px_rgba(37,211,102,0.3)] hover:shadow-[0_8px_30px_rgba(37,211,102,0.4)] transition-all rounded-2xl hover:-translate-y-1"
-                >
-                  <Phone className="w-6 h-6 mr-3 fill-current" />
-                  Solicitar Crédito Ahora
-                </Button>
+                  <div className="space-y-4 text-lg font-light pt-2">
+                    <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10">
+                      <span className="text-white/80 text-sm">Equipos seleccionados:</span>
+                      <span className="font-bold text-2xl text-[#00BAA2]">{itemsCount}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10">
+                      <span className="text-white/80 text-sm">Costo de evaluación:</span>
+                      <span className="font-bold text-xl text-[#00BAA2]">Gratis</span>
+                    </div>
+                    
+                    <div className="pt-2 px-1">
+                      <p className="text-[11px] text-white/50 leading-relaxed">
+                        * El plazo y aprobación del crédito están sujetos a la evaluación crediticia que realizaremos por WhatsApp.
+                      </p>
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-[#1B1857] h-16 text-lg font-extrabold shadow-[0_4px_20px_rgba(37,211,102,0.3)] hover:shadow-[0_8px_30px_rgba(37,211,102,0.4)] transition-all rounded-2xl hover:-translate-y-1 flex items-center justify-center gap-1 cursor-pointer"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-6 h-6 mr-1 fill-current" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Solicitar Crédito Ahora
+                  </Button>
+                </form>
 
                 <div className="mt-6 text-center">
-                  <button onClick={clearCart} className="text-white/40 hover:text-white/80 text-sm font-medium transition-colors underline underline-offset-4">
+                  <button onClick={clearCart} className="text-white/40 hover:text-white/80 text-sm font-medium transition-colors underline underline-offset-4 cursor-pointer">
                     Vaciar carrito
                   </button>
                 </div>

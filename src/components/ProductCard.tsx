@@ -1,27 +1,15 @@
 import { Product } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, Eye, ShoppingCart, Check } from "lucide-react";
+import { ShieldCheck, Eye, ShoppingCart } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useCart } from "@/hooks/useCart";
-import { useState } from "react";
 
 export function ProductCard({ product }: { product: Product }) {
   const slug = (product as any).slug || product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  const addItem = useCart((state) => state.addItem);
-  const [added, setAdded] = useState(false);
-
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addItem(product);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
 
   return (
-    <Card className="group relative flex flex-col h-full bg-white rounded-3xl border-0 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_-10px_rgba(0,186,162,0.2)] transition-all duration-500 hover:-translate-y-2 overflow-hidden ring-1 ring-slate-100 hover:ring-[#00BAA2]/30 cursor-pointer">
-      <Link to="/producto/$slug" params={{ slug }} className="block flex-1 flex flex-col no-underline">
+    <Link to="/producto/$slug" params={{ slug }} className="block no-underline h-full">
+      <Card className="group relative flex flex-col h-full bg-white rounded-3xl border-0 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_-10px_rgba(0,186,162,0.2)] transition-all duration-500 hover:-translate-y-2 overflow-hidden ring-1 ring-slate-100 hover:ring-[#00BAA2]/30 cursor-pointer">
         {/* Top Badges */}
         <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-md text-[#1B1857] text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-sm uppercase tracking-wider border border-slate-100 flex items-center gap-1">
           <span className="w-1.5 h-1.5 rounded-full bg-[#00BAA2] animate-pulse"></span>
@@ -84,31 +72,20 @@ export function ProductCard({ product }: { product: Product }) {
             </div>
           </div>
         </CardContent>
-      </Link>
 
-      {/* Button outside the Link */}
-      <div className="px-6 pb-6 pt-0 mt-auto">
-        <Button
-          onClick={handleAdd}
-          className={`w-full h-12 rounded-xl text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 ${
-            added 
-              ? "bg-[#1B1857] hover:bg-[#1B1857]/90 text-white" 
-              : "bg-[#00BAA2] hover:bg-[#00A886] text-white"
-          }`}
-        >
-          {added ? (
-            <>
-              <Check className="w-4 h-4" />
-              ¡Agregado!
-            </>
-          ) : (
-            <>
+        {/* Button inside the Link (fully clickable as part of card link) */}
+        <div className="px-6 pb-6 pt-0 mt-auto">
+          <Button
+            className="w-full h-12 rounded-xl text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 bg-[#00BAA2] hover:bg-[#00A886] text-white cursor-pointer"
+            asChild={false}
+          >
+            <div className="flex items-center justify-center gap-2 w-full h-full">
               <ShoppingCart className="w-4 h-4" />
-              Añadir al carrito
-            </>
-          )}
-        </Button>
-      </div>
-    </Card>
+              <span>Añadir al carrito</span>
+            </div>
+          </Button>
+        </div>
+      </Card>
+    </Link>
   );
 }
