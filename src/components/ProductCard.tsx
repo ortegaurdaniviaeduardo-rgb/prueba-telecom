@@ -23,7 +23,7 @@ export function ProductCard({ product }: { product: Product }) {
         )}
 
         {/* Image Area */}
-        <div className="relative w-full aspect-[4/5] bg-[#F8FAFC] overflow-hidden p-6 flex items-center justify-center">
+        <div className="relative w-full aspect-square bg-[#F8FAFC] overflow-hidden p-6 flex items-center justify-center">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 z-0"></div>
           
           {/* Main Image */}

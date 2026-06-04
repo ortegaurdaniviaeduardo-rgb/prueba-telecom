@@ -12,6 +12,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import libroReclamacionesUrl from "../assets/libro-reclamaciones.jpeg";
+import logoFlyUrl from "../assets/logo-fly.svg";
 
 function NotFoundComponent() {
   return (
@@ -360,11 +362,11 @@ function AppLayout() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            <div className="md:col-span-2 space-y-6">
+            <div className="space-y-6">
               <div className="inline-block transition-transform hover:scale-105 duration-300">
                 <img src={logoUrl} alt={brandName} className="h-16 md:h-24 w-auto object-contain" />
               </div>
-              <p className="text-white/60 leading-relaxed max-w-md text-sm">
+              <p className="text-white/60 leading-relaxed max-w-sm text-sm">
                 Tu mejor opción para renovar tu equipo. Te ofrecemos crédito rápido, fácil, sin inicial y 100% transparente para que estés siempre conectado.
               </p>
             </div>
@@ -378,6 +380,17 @@ function AppLayout() {
                 <li><Link to="/nosotros" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Sobre Nosotros</Link></li>
                 <li><Link to="/carrito" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Tu Carrito</Link></li>
               </ul>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-bold text-white mb-6">Legal</h4>
+              <ul className="space-y-3 text-sm mb-6">
+                <li><a href="#" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Términos y Condiciones</a></li>
+                <li><a href="#" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Políticas de Privacidad</a></li>
+              </ul>
+              <Link to="/libro-reclamaciones" className="inline-block hover:opacity-90 transition-opacity bg-white p-2 rounded-2xl shadow-md">
+                <img src={libroReclamacionesUrl} alt="Libro de Reclamaciones" className="h-10 w-auto object-contain" />
+              </Link>
             </div>
             
             <div>
@@ -399,11 +412,13 @@ function AppLayout() {
             </div>
           </div>
           
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="pt-8 border-t border-white/10 flex flex-col items-center gap-4">
             <p className="text-white/50 text-xs">&copy; {new Date().getFullYear()} {legalName}. Todos los derechos reservados.</p>
-            <div className="flex gap-4 text-white/50 text-xs">
-              <a href="#" className="hover:text-white transition-colors">Términos y Condiciones</a>
-              <a href="#" className="hover:text-white transition-colors">Políticas de Privacidad</a>
+            <div className="flex items-center gap-1.5 text-white/40 text-xs mt-2">
+              <span>Desarrollado por</span>
+              <a href="https://flyup.rest" target="_blank" rel="noopener noreferrer" className="hover:opacity-85 transition-opacity">
+                <img src={logoFlyUrl} alt="Fly" className="h-5 w-auto object-contain inline-block ml-1 bg-white/10 px-1 py-0.5 rounded" />
+              </a>
             </div>
           </div>
         </div>

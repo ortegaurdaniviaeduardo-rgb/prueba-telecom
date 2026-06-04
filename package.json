@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "seed": "node src/scripts/seed.cjs"
+    "seed": "node src/scripts/seed.cjs",
+    "seed:nuevo": "node src/scripts/seed-nuevo.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

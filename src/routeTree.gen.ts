@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
+import { Route as LibroReclamacionesRouteImport } from './routes/libro-reclamaciones'
 import { Route as CatalogoRouteImport } from './routes/catalogo'
 import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as ProductoSlugRouteImport } from './routes/producto.$slug'
 const NosotrosRoute = NosotrosRouteImport.update({
   id: '/nosotros',
   path: '/nosotros',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibroReclamacionesRoute = LibroReclamacionesRouteImport.update({
+  id: '/libro-reclamaciones',
+  path: '/libro-reclamaciones',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogoRoute = CatalogoRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
   '/catalogo': typeof CatalogoRoute
+  '/libro-reclamaciones': typeof LibroReclamacionesRoute
   '/nosotros': typeof NosotrosRoute
   '/producto/$slug': typeof ProductoSlugRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
   '/catalogo': typeof CatalogoRoute
+  '/libro-reclamaciones': typeof LibroReclamacionesRoute
   '/nosotros': typeof NosotrosRoute
   '/producto/$slug': typeof ProductoSlugRoute
 }
@@ -60,19 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
   '/catalogo': typeof CatalogoRoute
+  '/libro-reclamaciones': typeof LibroReclamacionesRoute
   '/nosotros': typeof NosotrosRoute
   '/producto/$slug': typeof ProductoSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/carrito' | '/catalogo' | '/nosotros' | '/producto/$slug'
+  fullPaths:
+    | '/'
+    | '/carrito'
+    | '/catalogo'
+    | '/libro-reclamaciones'
+    | '/nosotros'
+    | '/producto/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/carrito' | '/catalogo' | '/nosotros' | '/producto/$slug'
+  to:
+    | '/'
+    | '/carrito'
+    | '/catalogo'
+    | '/libro-reclamaciones'
+    | '/nosotros'
+    | '/producto/$slug'
   id:
     | '__root__'
     | '/'
     | '/carrito'
     | '/catalogo'
+    | '/libro-reclamaciones'
     | '/nosotros'
     | '/producto/$slug'
   fileRoutesById: FileRoutesById
@@ -81,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CarritoRoute: typeof CarritoRoute
   CatalogoRoute: typeof CatalogoRoute
+  LibroReclamacionesRoute: typeof LibroReclamacionesRoute
   NosotrosRoute: typeof NosotrosRoute
   ProductoSlugRoute: typeof ProductoSlugRoute
 }
@@ -92,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/nosotros'
       fullPath: '/nosotros'
       preLoaderRoute: typeof NosotrosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/libro-reclamaciones': {
+      id: '/libro-reclamaciones'
+      path: '/libro-reclamaciones'
+      fullPath: '/libro-reclamaciones'
+      preLoaderRoute: typeof LibroReclamacionesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/catalogo': {
@@ -129,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CarritoRoute: CarritoRoute,
   CatalogoRoute: CatalogoRoute,
+  LibroReclamacionesRoute: LibroReclamacionesRoute,
   NosotrosRoute: NosotrosRoute,
   ProductoSlugRoute: ProductoSlugRoute,
 }
