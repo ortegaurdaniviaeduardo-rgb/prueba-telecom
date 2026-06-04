@@ -161,7 +161,7 @@ function ProductoDetalle() {
           {/* === LEFT: Image Gallery === */}
           <div className="space-y-4">
             {/* Main image */}
-            <div className="relative bg-white rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(27,24,87,0.1)] ring-1 ring-slate-100 aspect-square flex items-center justify-center p-2">
+            <div className="relative bg-white rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(27,24,87,0.1)] ring-1 ring-slate-100 aspect-square flex items-center justify-center p-0">
               {/* Featured badge */}
               {product.isFeatured && (
                 <div className="absolute top-5 left-5 z-10 bg-gradient-to-r from-[#00BAA2] to-[#00A886] text-white text-xs font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-wider flex items-center gap-1">
@@ -183,7 +183,7 @@ function ProductoDetalle() {
                   key={activeImage}
                   src={images[activeImage] || product.image}
                   alt={product.name}
-                  className="w-full h-full object-contain drop-shadow-2xl"
+                  className="w-full h-full object-contain"
                   initial={{ opacity: 0, scale: 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.92 }}

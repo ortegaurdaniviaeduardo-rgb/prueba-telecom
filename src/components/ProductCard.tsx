@@ -23,14 +23,13 @@ export function ProductCard({ product }: { product: Product }) {
         )}
 
         {/* Image Area */}
-        <div className="relative w-full aspect-square bg-[#F8FAFC] overflow-hidden p-6 flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 z-0"></div>
+        <div className="relative w-full aspect-square bg-white overflow-hidden p-0 flex items-center justify-center">
           
           {/* Main Image */}
           <img
             src={product.image}
             alt={product.name}
-            className={`relative z-10 w-full h-full object-contain transition-all duration-700 ease-out drop-shadow-xl ${
+            className={`relative z-10 w-full h-full object-contain transition-all duration-700 ease-out ${
               product.images && product.images.length > 1
                 ? "group-hover:opacity-0 group-hover:scale-95"
                 : "group-hover:scale-110"
@@ -42,7 +41,7 @@ export function ProductCard({ product }: { product: Product }) {
             <img
               src={product.images[1]}
               alt={`${product.name} - vista alterna`}
-              className="absolute inset-0 z-15 w-full h-full object-contain p-6 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-95 group-hover:scale-105 drop-shadow-xl"
+              className="absolute inset-0 z-15 w-full h-full object-contain p-0 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out scale-95 group-hover:scale-105"
             />
           )}
 
