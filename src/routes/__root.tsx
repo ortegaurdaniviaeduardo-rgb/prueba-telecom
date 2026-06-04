@@ -223,13 +223,7 @@ function AppLayout() {
                     to={link.path}
                     hash={link.hash}
                     className={`relative z-10 px-4 py-2 font-semibold text-sm transition-colors duration-300 flex items-center gap-1 ${
-                      isHeaderTransparent
-                        ? isActive
-                          ? 'text-[#1B1857]'
-                          : 'text-[#1B1857]/70 hover:text-[#1B1857]'
-                        : isActive
-                        ? 'text-white'
-                        : 'text-white/70 hover:text-white'
+                      isActive ? 'text-white' : 'text-white/70 hover:text-white'
                     }`}
                   >
                     {link.name}
@@ -238,9 +232,7 @@ function AppLayout() {
                     {isActive && (
                       <motion.div
                         layoutId="navbar-indicator"
-                        className={`absolute inset-0 rounded-full -z-10 transition-colors ${
-                          isHeaderTransparent ? 'bg-[#1B1857]/10' : 'bg-white/10'
-                        }`}
+                        className="absolute inset-0 bg-white/10 rounded-full -z-10"
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       />
                     )}
@@ -271,14 +263,7 @@ function AppLayout() {
 
           {/* Right Action Area */}
           <div className="flex items-center gap-4">
-            <Link 
-              to="/carrito" 
-              className={`relative p-2.5 transition-colors rounded-full group ${
-                isHeaderTransparent
-                  ? 'text-[#1B1857]/80 hover:text-[#1B1857] hover:bg-[#1B1857]/5'
-                  : 'text-white/80 hover:text-white hover:bg-white/10'
-              }`}
-            >
+            <Link to="/carrito" className="relative p-2.5 text-white/80 hover:text-white transition-colors hover:bg-white/10 rounded-full group">
               <ShoppingCart className="w-6 h-6" />
               <AnimatePresence>
                 {itemsCount > 0 && (
@@ -286,9 +271,7 @@ function AppLayout() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
-                    className={`absolute -top-1.5 -right-1.5 bg-[#00BAA2] text-white text-[10px] font-extrabold w-5.5 h-5.5 rounded-full flex items-center justify-center border-2 transition-colors shadow-lg ${
-                      isHeaderTransparent ? 'border-white' : 'border-[#1B1857]'
-                    }`}
+                    className="absolute -top-1.5 -right-1.5 bg-[#00BAA2] text-white text-[10px] font-extrabold w-5.5 h-5.5 rounded-full flex items-center justify-center border-2 border-[#1B1857] shadow-lg"
                   >
                     {itemsCount}
                   </motion.span>
@@ -301,7 +284,7 @@ function AppLayout() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`md:hidden p-2 transition-colors ${
                 isHeaderTransparent
-                  ? 'text-[#1B1857]/80 hover:text-[#1B1857]'
+                  ? 'text-black hover:text-black/85'
                   : 'text-white/80 hover:text-white'
               }`}
               aria-label="Toggle mobile menu"
