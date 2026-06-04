@@ -95,12 +95,12 @@ function CatalogoComponent() {
           {/* Filters Row */}
           <div className="flex flex-wrap items-center justify-between gap-4 pt-3 border-t border-slate-100">
             {/* Brand Pills */}
-            <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+            <div className="flex flex-nowrap overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 md:mx-0 md:px-0 items-center gap-2 flex-1 min-w-0">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2.5 rounded-full text-sm font-bold transition-all duration-200 ${
+                  className={`px-4 py-2.5 rounded-full text-sm font-bold transition-all duration-200 shrink-0 ${
                     selectedCategory === cat
                       ? "bg-[#00BAA2] text-white shadow-md shadow-[#00BAA2]/20 border border-transparent"
                       : "border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700"
@@ -165,7 +165,7 @@ function CatalogoComponent() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-20">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 mb-20">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

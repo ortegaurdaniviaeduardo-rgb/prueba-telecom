@@ -36,8 +36,7 @@ function Index() {
   return (
     <div className="flex flex-col bg-[#FFFBFB]">
       {/* 1. PORTADA: Carrusel de imágenes de portada */}
-      {/* 1. PORTADA: Carrusel de imágenes de portada */}
-      <section className="w-full aspect-[5000/2813] sm:aspect-auto sm:h-[80vh] md:h-screen relative overflow-hidden bg-[#1B1857]">
+      <section className="w-full aspect-[16/9] xs:aspect-[16/10] sm:aspect-auto sm:h-[80vh] md:h-screen relative overflow-hidden bg-[#1B1857]">
         {isLoadingSlides ? (
           <div className="w-full h-full bg-slate-800/10 flex items-center justify-center">
             <Loader2 className="w-12 h-12 text-[#00BAA2] animate-spin" />
@@ -73,7 +72,7 @@ function Index() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-sm font-extrabold text-[#00BAA2] tracking-[0.2em] uppercase mb-3">Top Ventas</h2>
-            <h3 className="text-4xl md:text-5xl font-bold text-[#1B1857] mb-6 title">Celulares Más Vendidos</h3>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#1B1857] mb-6 title">Celulares Más Vendidos</h3>
             <p className="text-lg text-slate-600">
               Descubre los equipos favoritos de nuestros clientes este mes. 
               <br className="hidden md:block" />Fináncialos hoy mismo sin cuota inicial.
@@ -111,7 +110,7 @@ function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <h2 className="text-sm font-extrabold text-[#00BAA2] tracking-[0.2em] uppercase">Por qué elegirnos</h2>
-              <h3 className="text-4xl md:text-5xl font-bold leading-tight title">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight title">
                 Tu crédito rápido, fácil y <span className="text-[#00BAA2]">transparente.</span>
               </h3>
               <p className="text-lg text-white/80 leading-relaxed font-light">
@@ -172,7 +171,7 @@ function Index() {
       <section id="ganadores" className="py-24 bg-[#FFF5EF]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto mb-10">
-            <h3 className="text-3xl md:text-5xl font-extrabold text-[#1B1857] mb-8 title leading-tight">
+            <h3 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#1B1857] mb-8 title leading-tight">
               Ellos ya estrenaron <span className="text-[#FF7043]">su nuevo celular</span>
             </h3>
             

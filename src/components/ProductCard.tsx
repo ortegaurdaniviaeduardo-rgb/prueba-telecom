@@ -11,13 +11,13 @@ export function ProductCard({ product }: { product: Product }) {
     <Link to="/producto/$slug" params={{ slug }} className="block no-underline h-full">
       <Card className="group relative flex flex-col h-full bg-white rounded-3xl border-0 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_-10px_rgba(0,186,162,0.2)] transition-all duration-500 hover:-translate-y-2 overflow-hidden ring-1 ring-slate-100 hover:ring-[#00BAA2]/30 cursor-pointer">
         {/* Top Badges */}
-        <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-md text-[#1B1857] text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-sm uppercase tracking-wider border border-slate-100 flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00BAA2] animate-pulse"></span>
+        <div className="absolute top-2 left-2 sm:top-4 sm:left-4 z-10 bg-white/95 backdrop-blur-md text-[#1B1857] text-[8px] sm:text-[10px] font-extrabold px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow-sm uppercase tracking-wider border border-slate-100 flex items-center gap-1">
+          <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#00BAA2] animate-pulse"></span>
           S/ 0 Inicial
         </div>
 
         {product.isFeatured && (
-          <div className="absolute top-4 right-4 z-10 bg-gradient-to-r from-[#00BAA2] to-[#00A886] text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+          <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 bg-gradient-to-r from-[#00BAA2] to-[#00A886] text-white text-[8px] sm:text-[10px] font-extrabold px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow-md uppercase tracking-wider">
             Destacado
           </div>
         )}
@@ -57,30 +57,31 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Content */}
-        <CardContent className="flex-1 flex flex-col p-6 pt-5 pb-4">
+        <CardContent className="flex-1 flex flex-col p-3 pt-4 pb-3 sm:p-6 sm:pt-5 sm:pb-4">
           <div className="mb-auto">
-            <p className="text-[#00BAA2] text-xs font-bold uppercase tracking-widest mb-1.5">
+            <p className="text-[#00BAA2] text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-1 sm:mb-1.5">
               {product.brand}
             </p>
-            <h3 className="text-xl font-bold text-[#1B1857] leading-tight mb-3 title">
+            <h3 className="text-sm sm:text-xl font-bold text-[#1B1857] leading-tight mb-1.5 sm:mb-3 title line-clamp-2 h-10 sm:h-auto">
               {product.name}
             </h3>
-            <div className="flex items-center gap-1.5 text-xs text-slate-500">
-              <ShieldCheck className="w-4 h-4 text-[#00BAA2]" />
-              <span>Garantía de originalidad</span>
+            <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-xs text-slate-500">
+              <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00BAA2]" />
+              <span>Garantía original</span>
             </div>
           </div>
         </CardContent>
 
         {/* Button inside the Link (fully clickable as part of card link) */}
-        <div className="px-6 pb-6 pt-0 mt-auto">
+        <div className="px-3 pb-3 sm:px-6 sm:pb-6 pt-0 mt-auto">
           <Button
-            className="w-full h-12 rounded-xl text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 bg-[#00BAA2] hover:bg-[#00A886] text-white cursor-pointer"
+            className="w-full h-9 sm:h-12 rounded-lg sm:rounded-xl text-[11px] sm:text-sm font-bold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-1.5 sm:gap-2 bg-[#00BAA2] hover:bg-[#00A886] text-white cursor-pointer"
             asChild={false}
           >
-            <div className="flex items-center justify-center gap-2 w-full h-full">
-              <ShoppingCart className="w-4 h-4" />
-              <span>Añadir al carrito</span>
+            <div className="flex items-center justify-center gap-1.5 sm:gap-2 w-full h-full">
+              <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <span className="hidden sm:inline">Añadir al carrito</span>
+              <span className="sm:hidden">Añadir</span>
             </div>
           </Button>
         </div>

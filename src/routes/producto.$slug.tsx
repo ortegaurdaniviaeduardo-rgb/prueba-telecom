@@ -230,7 +230,7 @@ function ProductoDetalle() {
             )}
 
             {/* Trust Badges */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {[
                 { icon: ShieldCheck, label: 'Garantía original', sub: '100% auténtico' },
                 { icon: Zap, label: 'Evaluación rápida', sub: 'Respuesta inmediata' },
@@ -238,11 +238,11 @@ function ProductoDetalle() {
               ].map(({ icon: Icon, label, sub }) => (
                 <div
                   key={label}
-                  className="bg-white rounded-2xl p-4 text-center shadow-sm ring-1 ring-slate-100"
+                  className="bg-white rounded-2xl p-2 sm:p-4 text-center shadow-sm ring-1 ring-slate-100"
                 >
-                  <Icon className="w-6 h-6 text-[#00BAA2] mx-auto mb-2" />
-                  <p className="text-xs font-bold text-[#1B1857] leading-tight">{label}</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">{sub}</p>
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#00BAA2] mx-auto mb-1.5 sm:mb-2" />
+                  <p className="text-[10px] sm:text-xs font-bold text-[#1B1857] leading-tight">{label}</p>
+                  <p className="text-[8px] sm:text-[10px] text-slate-400 mt-0.5">{sub}</p>
                 </div>
               ))}
             </div>
@@ -255,7 +255,7 @@ function ProductoDetalle() {
               <p className="text-[#00BAA2] text-sm font-extrabold uppercase tracking-widest mb-2">
                 {product.brand}
               </p>
-              <h1 className="text-4xl font-bold text-[#1B1857] leading-tight title mb-4">
+              <h1 className="text-2xl sm:text-4xl font-bold text-[#1B1857] leading-tight title mb-4">
                 {product.name}
               </h1>
 
@@ -324,7 +324,7 @@ function ProductoDetalle() {
               </a>
 
               {/* Grid with Add to Cart & Back to Catalog */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <Button
                   onClick={handleAddToCart}
                   className={`h-12 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${
