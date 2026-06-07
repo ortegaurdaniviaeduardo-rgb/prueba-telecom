@@ -184,7 +184,7 @@ function AppLayout() {
   const navLinks = [
     { name: 'Inicio', path: '/' },
     { name: 'Catálogo', path: '/catalogo', hasDropdown: true },
-    { name: 'Ganadores', path: '/', hash: 'ganadores' },
+    { name: 'Clientes', path: '/', hash: 'clientes' },
     { name: 'Nosotros', path: '/nosotros' }
   ];
 
@@ -434,7 +434,7 @@ function AppLayout() {
               <ul className="space-y-3 text-sm">
                 <li><Link to="/" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Inicio</Link></li>
                 <li><Link to="/catalogo" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Catálogo de Equipos</Link></li>
-                <li><Link to="/" hash="ganadores" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Ganadores</Link></li>
+                <li><Link to="/" hash="clientes" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Clientes</Link></li>
                 <li><Link to="/nosotros" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Sobre Nosotros</Link></li>
                 <li><Link to="/carrito" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Tu Carrito</Link></li>
               </ul>

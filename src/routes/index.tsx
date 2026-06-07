@@ -168,7 +168,7 @@ function Index() {
       </section>
 
       {/* 4. TESTIMONIOS */}
-      <section id="ganadores" className="py-24 bg-[#FFF5EF]">
+      <section id="clientes" className="py-24 bg-[#FFF5EF]">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto mb-10">
             <h3 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#1B1857] mb-8 title leading-tight">
