@@ -1,7 +1,54 @@
 import { useQuery } from '@tanstack/react-query';
-import { Product, products as mockProducts } from '@/lib/data';
+import { Product, products as mockProducts, Testimonial, testimonials as mockTestimonials } from '@/lib/data';
 
 const API_BASE = 'https://api.flyup.rest/api/v1';
+
+// URL de Google Sheet publicada en la Web en formato CSV
+// El cliente final puede reemplazar este enlace con su propia hoja publicada
+export const GOOGLE_SHEETS_TESTIMONIALS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT5K76D0R3k-9S5XvEsz1T3ZgZkZ-T0XvEsz1T3ZgZkZ-T0XvEsz1T3ZgZ/pub?output=csv';
+
+// Función robusta para parsear archivos CSV respetando comillas y saltos de línea
+function parseCSV(text: string): string[][] {
+  const lines: string[][] = [];
+  let row: string[] = [];
+  let inQuotes = false;
+  let currentVal = '';
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        currentVal += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      row.push(currentVal.trim());
+      currentVal = '';
+    } else if ((char === '\r' || char === '\n') && !inQuotes) {
+      if (char === '\r' && nextChar === '\n') {
+        i++;
+      }
+      row.push(currentVal.trim());
+      if (row.length > 0) {
+        lines.push(row);
+      }
+      row = [];
+      currentVal = '';
+    } else {
+      currentVal += char;
+    }
+  }
+  if (currentVal || row.length > 0) {
+    row.push(currentVal.trim());
+    lines.push(row);
+  }
+  return lines;
+}
+
 
 // API Response Types
 export interface ApiCompany {
@@ -190,3 +237,57 @@ export function useProductBySlugQuery(slug: string) {
     enabled: !!slug,
   });
 }
+
+export interface GoogleSheetTestimonial extends Testimonial {
+  active: boolean;
+}
+
+export function useTestimonialsQuery() {
+  return useQuery<Testimonial[]>({
+    queryKey: ['api-testimonials'],
+    queryFn: async () => {
+      try {
+        const res = await fetch(GOOGLE_SHEETS_TESTIMONIALS_URL);
+        if (!res.ok) throw new Error('Failed to load testimonials from sheet');
+        const csvText = await res.text();
+        const rows = parseCSV(csvText);
+        
+        // Debe haber al menos una fila de datos además del encabezado
+        if (rows.length <= 1) {
+          return mockTestimonials;
+        }
+
+        // Saltamos la fila 0 (encabezado)
+        const mappedList: GoogleSheetTestimonial[] = rows.slice(1).map((row, index) => {
+          const name = row[1] || 'Cliente Satisfecho';
+          const text = row[2] || '';
+          const image = row[3] || '/placeholder.jpg';
+          const rating = parseInt(row[4], 10) || 5;
+          const activeVal = (row[5] || 'true').toLowerCase().trim();
+          
+          // Consideramos inactivo solo si es explícitamente no, false, inactivo o 0
+          const active = !['no', 'false', '0', 'inactivo'].includes(activeVal);
+
+          return {
+            id: row[0] || `sheet-${index}`,
+            name,
+            text,
+            image,
+            rating: Math.min(5, Math.max(1, rating)),
+            active
+          };
+        });
+
+        // Filtrar solo los activos
+        const activeTestimonials = mappedList.filter(t => t.active);
+        
+        return activeTestimonials.length > 0 ? activeTestimonials : mockTestimonials;
+      } catch (error) {
+        console.error('Error fetching testimonials from Google Sheets, using fallback mock data:', error);
+        return mockTestimonials;
+      }
+    },
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+  });
+}
+

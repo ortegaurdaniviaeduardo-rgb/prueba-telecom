@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { testimonials } from '@/lib/data';
-import { useProductsQuery, useAnnouncementsQuery } from '@/hooks/useApi';
+import { useProductsQuery, useAnnouncementsQuery, useTestimonialsQuery } from '@/hooks/useApi';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { Button } from '@/components/ui/button';
@@ -15,6 +14,8 @@ export const Route = createFileRoute('/')({
 function Index() {
   const { data: apiProducts = [], isLoading: isLoadingProducts } = useProductsQuery();
   const { data: heroSlides = [], isLoading: isLoadingSlides } = useAnnouncementsQuery();
+  const { data: testimonials = [] } = useTestimonialsQuery();
+
 
   const featuredProducts = React.useMemo(() => {
     return apiProducts.filter(p => p.isFeatured).slice(0, 8);
