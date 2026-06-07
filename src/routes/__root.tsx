@@ -185,7 +185,7 @@ function AppLayout() {
     { name: 'Inicio', path: '/' },
     { name: 'Catálogo', path: '/catalogo', hasDropdown: true },
     { name: 'Clientes', path: '/', hash: 'clientes' },
-    { name: 'Sedes', path: '/', hash: 'sedes' },
+    { name: 'Sedes', path: '/', hash: 'sedes', hasDropdown: true },
     { name: 'Nosotros', path: '/nosotros' }
   ];
 
@@ -256,7 +256,7 @@ function AppLayout() {
                     )}
                   </Link>
                   
-                  {link.hasDropdown && (
+                  {link.hasDropdown && link.name === 'Catálogo' && (
                     <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50">
                       <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-2 min-w-[200px] flex flex-col relative before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:border-8 before:border-transparent before:border-b-white">
                         <Link to="/catalogo" className="px-4 py-2.5 text-sm font-bold text-[#1B1857] hover:bg-slate-50 rounded-xl transition-colors">Ver todo el catálogo</Link>
@@ -271,6 +271,28 @@ function AppLayout() {
                             {cat}
                           </Link>
                         ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {link.hasDropdown && link.name === 'Sedes' && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50">
+                      <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-3 min-w-[280px] flex flex-col gap-2 relative before:absolute before:-top-2 before:left-1/2 before:-translate-x-1/2 before:border-8 before:border-transparent before:border-b-white">
+                        <Link to="/" hash="sedes" className="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl transition-colors group/sede">
+                          <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" className="w-12 h-12 rounded-lg object-cover" alt="Sede Principal" />
+                          <div>
+                            <p className="font-bold text-[#1B1857] text-sm group-hover/sede:text-[#00BAA2] transition-colors">Tienda Central</p>
+                            <p className="text-xs text-slate-500 line-clamp-1">Av. Principal 123, Tumbes</p>
+                          </div>
+                        </Link>
+                        <div className="h-px bg-slate-100 mx-2"></div>
+                        <Link to="/" hash="sedes" className="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-xl transition-colors group/sede">
+                          <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=800&auto=format&fit=crop" className="w-12 h-12 rounded-lg object-cover" alt="Sucursal" />
+                          <div>
+                            <p className="font-bold text-[#1B1857] text-sm group-hover/sede:text-[#00BAA2] transition-colors">Tienda Norte</p>
+                            <p className="text-xs text-slate-500 line-clamp-1">Av. Panamericana 456, Tumbes</p>
+                          </div>
+                        </Link>
                       </div>
                     </div>
                   )}
@@ -367,7 +389,7 @@ function AppLayout() {
                     >
                       {link.name}
                     </Link>
-                    {link.hasDropdown && (
+                    {link.hasDropdown && link.name === 'Catálogo' && (
                       <div className="pl-4 grid grid-cols-2 gap-2 pb-2">
                         {categories.filter(c => c !== "Todas").map(cat => (
                           <Link
@@ -386,6 +408,24 @@ function AppLayout() {
                           className="text-[#00BAA2] hover:text-white text-sm py-1.5 font-bold col-span-2"
                         >
                           Ver todo el catálogo →
+                        </Link>
+                      </div>
+                    )}
+                    {link.hasDropdown && link.name === 'Sedes' && (
+                      <div className="pl-4 flex flex-col gap-3 pb-2">
+                        <Link to="/" hash="sedes" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
+                          <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" className="w-10 h-10 rounded-lg object-cover" alt="Sede" />
+                          <div>
+                            <p className="font-bold text-white/90 text-sm">Tienda Central</p>
+                            <p className="text-xs text-white/50">Av. Principal 123</p>
+                          </div>
+                        </Link>
+                        <Link to="/" hash="sedes" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
+                          <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=800&auto=format&fit=crop" className="w-10 h-10 rounded-lg object-cover" alt="Sede" />
+                          <div>
+                            <p className="font-bold text-white/90 text-sm">Tienda Norte</p>
+                            <p className="text-xs text-white/50">Av. Panamericana 456</p>
+                          </div>
                         </Link>
                       </div>
                     )}
