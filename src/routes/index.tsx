@@ -37,7 +37,7 @@ function Index() {
   return (
     <div className="flex flex-col bg-[#FFFBFB]">
       {/* 1. PORTADA: Carrusel de imágenes de portada */}
-      <section className="w-full aspect-[16/9] xs:aspect-[16/10] sm:aspect-auto sm:h-[80vh] md:h-screen relative overflow-hidden bg-[#1B1857]">
+      <section className="w-full h-[55vh] xs:h-[60vh] sm:h-[80vh] md:h-screen relative overflow-hidden bg-[#1B1857]">
         {isLoadingSlides ? (
           <div className="w-full h-full bg-slate-800/10 flex items-center justify-center">
             <Loader2 className="w-12 h-12 text-[#00BAA2] animate-spin" />
@@ -47,14 +47,21 @@ function Index() {
             <CarouselContent className="h-full ml-0">
               {heroSlides.map((slide, index) => (
                 <CarouselItem key={index} className="h-full pl-0">
-                  <div className="relative w-full h-full overflow-hidden bg-[#1B1857]">
+                  <div className="relative w-full h-full overflow-hidden bg-[#1B1857] flex items-center justify-center">
+                    {/* Blurred background fallback to prevent empty spaces if image doesn't match aspect ratio */}
+                    <img 
+                      src={slide} 
+                      className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-110" 
+                      alt="" 
+                      aria-hidden="true" 
+                    />
                     <img
                       src={slide}
                       alt={`Portada promocional ${index + 1}`}
-                      className="w-full h-full object-cover object-center"
+                      className="relative w-full h-full object-contain md:object-cover object-center z-10"
                     />
                     {/* Shadow overlay to ensure text legibility */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/45 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/45 pointer-events-none z-20" />
                   </div>
                 </CarouselItem>
               ))}
