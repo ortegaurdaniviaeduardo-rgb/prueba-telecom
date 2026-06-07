@@ -37,7 +37,7 @@ function Index() {
   return (
     <div className="flex flex-col bg-[#FFFBFB]">
       {/* 1. PORTADA: Carrusel de imágenes de portada */}
-      <section className="w-full aspect-square md:aspect-auto md:h-screen relative overflow-hidden bg-[#1B1857]">
+      <section className="w-full aspect-video md:aspect-auto md:h-screen relative overflow-hidden bg-[#1B1857]">
         {isLoadingSlides ? (
           <div className="w-full h-full bg-slate-800/10 flex items-center justify-center">
             <Loader2 className="w-12 h-12 text-[#00BAA2] animate-spin" />
