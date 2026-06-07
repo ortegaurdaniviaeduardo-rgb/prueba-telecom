@@ -197,7 +197,7 @@ function AppLayout() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5, type: 'spring', stiffness: 100 }}
         className={`z-50 w-full transition-all duration-300 ${
-          location.pathname === '/' ? 'fixed' : 'sticky'
+          location.pathname === '/' ? 'sticky md:fixed' : 'sticky'
         } top-0 ${
           scrolled || isMobileMenuOpen
             ? 'bg-[#1B1857]/95 backdrop-blur-md shadow-2xl py-2'

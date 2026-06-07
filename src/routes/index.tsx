@@ -58,7 +58,7 @@ function Index() {
                     <img
                       src={slide}
                       alt={`Portada promocional ${index + 1}`}
-                      className="relative w-full h-full object-contain object-center z-10"
+                      className="relative w-full h-full object-cover object-center z-10"
                     />
                     {/* Shadow overlay to ensure text legibility */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/45 pointer-events-none z-20" />
