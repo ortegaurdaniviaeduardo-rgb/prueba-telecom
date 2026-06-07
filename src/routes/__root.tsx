@@ -123,7 +123,7 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-import { ShoppingCart, Phone, ChevronDown, Menu, X, Loader2 } from "lucide-react";
+import { ShoppingCart, Phone, ChevronDown, Menu, X, Loader2, Search } from "lucide-react";
 import { useCart } from "../hooks/useCart";
 import { useState } from "react";
 import { useCategoriesQuery, useCompanyQuery } from "../hooks/useApi";
@@ -199,17 +199,34 @@ function AppLayout() {
           location.pathname === '/' ? 'fixed' : 'sticky'
         } top-0 ${
           scrolled || isMobileMenuOpen
-            ? 'bg-[#1B1857]/90 backdrop-blur-md shadow-2xl py-2'
+            ? 'bg-[#1B1857]/95 backdrop-blur-md shadow-2xl py-2'
             : location.pathname === '/'
-            ? 'bg-transparent py-2.5 sm:py-4'
-            : 'bg-[#1B1857] py-2.5 sm:py-4'
+            ? 'bg-[#1B1857] md:bg-transparent py-2 md:py-4'
+            : 'bg-[#1B1857] py-2 md:py-4'
         }`}
       >
-        <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex relative group z-50">
-            <img src={logoUrl} alt={brandName} className="h-10 xs:h-12 sm:h-14 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
-          </Link>
+        <div className="container mx-auto px-4 lg:px-8 grid grid-cols-3 md:flex items-center justify-between">
+          {/* Mobile Menu Trigger (Left on Mobile) */}
+          <div className="flex md:hidden justify-start">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-white/90 hover:text-white p-2 transition-colors"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            </button>
+          </div>
+
+          {/* Logo (Center on Mobile, Left on Desktop) */}
+          <div className="col-start-2 col-span-1 flex justify-center md:block md:col-auto z-50">
+            <Link to="/" className="flex relative group">
+              <img 
+                src={logoUrl} 
+                alt={brandName} 
+                className="h-12 xs:h-14 sm:h-16 md:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+              />
+            </Link>
+          </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-1">
@@ -261,8 +278,30 @@ function AppLayout() {
             })}
           </nav>
 
-          {/* Right Action Area */}
-          <div className="flex items-center gap-4">
+          {/* Mobile Search & Cart Actions (Right on Mobile) */}
+          <div className="flex md:hidden items-center gap-1.5 justify-end">
+            <Link to="/catalogo" className="p-2.5 text-white/90 hover:text-white transition-colors hover:bg-white/10 rounded-full">
+              <Search className="w-6 h-6" />
+            </Link>
+            <Link to="/carrito" className="relative p-2.5 text-white/90 hover:text-white transition-colors hover:bg-white/10 rounded-full group">
+              <ShoppingCart className="w-6 h-6" />
+              <AnimatePresence>
+                {itemsCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    className="absolute -top-1.5 -right-1.5 bg-[#00BAA2] text-white text-[10px] font-extrabold w-5.5 h-5.5 rounded-full flex items-center justify-center border-2 border-[#1B1857] shadow-lg"
+                  >
+                    {itemsCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </Link>
+          </div>
+
+          {/* Desktop Right Action Area */}
+          <div className="hidden md:flex items-center gap-4">
             <Link to="/carrito" className="relative p-2.5 text-white/80 hover:text-white transition-colors hover:bg-white/10 rounded-full group">
               <ShoppingCart className="w-6 h-6" />
               <AnimatePresence>
@@ -278,19 +317,32 @@ function AppLayout() {
                 )}
               </AnimatePresence>
             </Link>
+          </div>
+        </div>
 
-            {/* Mobile Menu Trigger */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden p-2 transition-colors ${
-                isHeaderTransparent
-                  ? 'text-black hover:text-black/85'
-                  : 'text-white/80 hover:text-white'
-              }`}
-              aria-label="Toggle mobile menu"
-            >
-              {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
-            </button>
+        {/* Mobile Subheader Menu Bar */}
+        <div className="md:hidden bg-[#13113C]/95 backdrop-blur-md border-t border-white/5 py-2.5 overflow-x-auto no-scrollbar scroll-smooth">
+          <div className="flex items-center gap-2 px-4 w-max mx-auto">
+            {navLinks.map((link) => {
+              const isActive = link.hash
+                ? location.pathname === link.path && location.hash === `#${link.hash}`
+                : location.pathname === link.path && !location.hash;
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  hash={link.hash}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-200 border ${
+                    isActive
+                      ? 'bg-[#00BAA2] text-white border-[#00BAA2] shadow-lg shadow-[#00BAA2]/25'
+                      : 'bg-white/5 text-white/80 border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </div>
         </div>
 

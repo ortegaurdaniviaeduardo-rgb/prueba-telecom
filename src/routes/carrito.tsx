@@ -5,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Trash2, ArrowLeft, Plus, Minus, CheckCircle2 } from 'lucide-react';
 import { useCompanyQuery } from '@/hooks/useApi';
 import { useState } from 'react';
+import { lookupDni } from '@/lib/api/dni.functions';
+import { toast } from 'sonner';
 
 export const Route = createFileRoute('/carrito')({
   component: CarritoComponent,
@@ -15,8 +17,39 @@ function CarritoComponent() {
   const itemsCount = getItemsCount();
   const { data: company } = useCompanyQuery();
 
+  const [clientDni, setClientDni] = useState("");
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
+  const [isSearchingDni, setIsSearchingDni] = useState(false);
+
+  const handleDniChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "").substring(0, 8);
+    setClientDni(value);
+    
+    if (value.length === 8) {
+      setIsSearchingDni(true);
+      try {
+        const result = await lookupDni({ data: { dni: value } });
+        if (result.success && result.name) {
+          setClientName(result.name);
+          toast.success(
+            result.source === "mock" 
+              ? "DNI encontrado (Prueba)" 
+              : result.source === "simulation" 
+              ? "DNI validado (Simulado)" 
+              : "DNI encontrado"
+          );
+        } else if (result.error) {
+          toast.error(result.error);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Error al consultar el DNI.");
+      } finally {
+        setIsSearchingDni(false);
+      }
+    }
+  };
 
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +68,7 @@ function CarritoComponent() {
     });
     
     message += `\n*Datos del Cliente:*\n`;
+    message += `- DNI: ${clientDni}\n`;
     message += `- Nombres y Apellidos: ${clientName}\n`;
     message += `- N° Celular: ${clientPhone}\n\n`;
     
@@ -141,6 +175,25 @@ function CarritoComponent() {
 
                   {/* Input fields for client details */}
                   <div className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">DNI (Perú)</label>
+                      <div className="relative">
+                        <input 
+                          type="text" 
+                          placeholder="Ej. 12345678"
+                          className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
+                          value={clientDni}
+                          onChange={handleDniChange}
+                          maxLength={8}
+                          required
+                        />
+                        {isSearchingDni && (
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                            <div className="w-5 h-5 border-2 border-[#00BAA2] border-t-transparent rounded-full animate-spin"></div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                     <div>
                       <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">Nombres y Apellidos</label>
                       <input 
