@@ -37,21 +37,28 @@ function Index() {
   return (
     <div className="flex flex-col bg-[#FFFBFB]">
       {/* 1. PORTADA: Carrusel de imágenes de portada */}
-      <section className="w-full h-auto md:h-screen relative overflow-hidden bg-[#1B1857]">
+      <section className="w-full aspect-square md:aspect-auto md:h-[85vh] relative overflow-hidden bg-[#1B1857]">
         {isLoadingSlides ? (
-          <div className="w-full aspect-[21/9] md:h-full bg-slate-800/10 flex items-center justify-center">
+          <div className="w-full h-full bg-slate-800/10 flex items-center justify-center">
             <Loader2 className="w-12 h-12 text-[#00BAA2] animate-spin" />
           </div>
         ) : (
           <Carousel className="w-full h-full relative" opts={{ loop: true }}>
             <CarouselContent className="h-full ml-0">
               {heroSlides.map((slide, index) => (
-                <CarouselItem key={index} className="h-full pl-0 flex items-center justify-center">
+                <CarouselItem key={index} className="h-full pl-0">
                   <div className="relative w-full h-full overflow-hidden bg-[#1B1857]">
+                    {/* Blurred background fallback for non-square images */}
+                    <img 
+                      src={slide} 
+                      className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-50 scale-125 z-0" 
+                      alt="" 
+                      aria-hidden="true" 
+                    />
                     <img
                       src={slide}
                       alt={`Portada promocional ${index + 1}`}
-                      className="w-full h-auto md:h-full object-contain md:object-cover object-center z-10"
+                      className="relative w-full h-full object-contain object-center z-10"
                     />
                     {/* Shadow overlay to ensure text legibility */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/45 pointer-events-none z-20" />
