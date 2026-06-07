@@ -185,6 +185,7 @@ function AppLayout() {
     { name: 'Inicio', path: '/' },
     { name: 'Catálogo', path: '/catalogo', hasDropdown: true },
     { name: 'Clientes', path: '/', hash: 'clientes' },
+    { name: 'Sedes', path: '/', hash: 'sedes' },
     { name: 'Nosotros', path: '/nosotros' }
   ];
 
@@ -435,7 +436,8 @@ function AppLayout() {
                 <li><Link to="/" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Inicio</Link></li>
                 <li><Link to="/catalogo" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Catálogo de Equipos</Link></li>
                 <li><Link to="/" hash="clientes" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Clientes</Link></li>
-                <li><Link to="/nosotros" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Sobre Nosotros</Link></li>
+                <li><Link to="/" hash="sedes" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Sedes</Link></li>
+                <li><Link to="/nosotros" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Nosotros</Link></li>
                 <li><Link to="/carrito" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Tu Carrito</Link></li>
               </ul>
             </div>

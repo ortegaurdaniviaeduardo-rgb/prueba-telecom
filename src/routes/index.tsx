@@ -5,7 +5,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel';
-import { ArrowRight, ShieldCheck, Zap, Handshake, Loader2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Zap, Handshake, Loader2, MapPin } from 'lucide-react';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -218,6 +218,82 @@ function Index() {
                 aria-label={`Ir al testimonio ${i + 1}`}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. NUESTRAS SEDES */}
+      <section id="sedes" className="py-24 bg-white relative overflow-hidden">
+        {/* Background Decorations */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#00BAA2]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#1B1857]/5 rounded-full blur-3xl" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h3 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-[#1B1857] mb-6 title leading-tight">
+              Visita nuestras <span className="text-[#00BAA2]">Sedes</span>
+            </h3>
+            <p className="text-slate-600 text-lg">
+              Ven y conoce todos nuestros equipos en persona. Te esperamos con la mejor atención.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Sede Principal */}
+            <div className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
+              <div className="relative h-64 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" 
+                  alt="Sede Principal Telecom BL Express" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4">
+                  <span className="bg-[#FF7043] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Sede Principal
+                  </span>
+                </div>
+              </div>
+              <div className="p-8 flex-1 flex flex-col justify-center">
+                <h4 className="text-2xl font-bold text-[#1B1857] mb-4 group-hover:text-[#00BAA2] transition-colors">
+                  Tienda Central
+                </h4>
+                <div className="flex items-start gap-3 text-slate-600">
+                  <MapPin className="w-6 h-6 text-[#00BAA2] shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    Av. Principal 123, Centro Comercial Tecnológico, Tumbes.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Sede Secundaria (Placeholder para el futuro o si tienen otra) */}
+            <div className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
+              <div className="relative h-64 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=800&auto=format&fit=crop" 
+                  alt="Sucursal Telecom BL Express" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-4">
+                  <span className="bg-[#1B1857] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Sucursal Norte
+                  </span>
+                </div>
+              </div>
+              <div className="p-8 flex-1 flex flex-col justify-center">
+                <h4 className="text-2xl font-bold text-[#1B1857] mb-4 group-hover:text-[#00BAA2] transition-colors">
+                  Tienda Norte
+                </h4>
+                <div className="flex items-start gap-3 text-slate-600">
+                  <MapPin className="w-6 h-6 text-[#00BAA2] shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    Av. Panamericana 456, Plaza Comercial, Tumbes.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
