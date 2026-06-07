@@ -37,7 +37,7 @@ function Index() {
   return (
     <div className="flex flex-col bg-[#FFFBFB]">
       {/* 1. PORTADA: Carrusel de imágenes de portada */}
-      <section className="w-full aspect-square md:aspect-auto md:h-[85vh] relative overflow-hidden bg-[#1B1857]">
+      <section className="w-full aspect-square md:aspect-auto md:h-screen relative overflow-hidden bg-[#1B1857]">
         {isLoadingSlides ? (
           <div className="w-full h-full bg-slate-800/10 flex items-center justify-center">
             <Loader2 className="w-12 h-12 text-[#00BAA2] animate-spin" />
@@ -58,7 +58,7 @@ function Index() {
                     <img
                       src={slide}
                       alt={`Portada promocional ${index + 1}`}
-                      className="relative w-full h-full object-cover object-center z-10"
+                      className="relative w-full h-full object-cover md:object-contain object-center z-10"
                     />
                     {/* Shadow overlay to ensure text legibility */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/45 pointer-events-none z-20" />
