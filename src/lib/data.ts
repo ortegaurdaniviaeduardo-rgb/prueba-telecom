@@ -263,10 +263,10 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: 5,
-    name: "Carlos Mendoza",
+    name: "María López",
     text: "Pensé que sería difícil sacar a crédito, pero fue muy rápido.",
     rating: 5,
-    image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.55-AM-(1).jpeg"
+    image: ""
   },
   {
     id: 6,
