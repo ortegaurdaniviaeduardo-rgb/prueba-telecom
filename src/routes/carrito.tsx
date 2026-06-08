@@ -29,7 +29,7 @@ function CarritoComponent() {
       ? `51${formattedPhone}` 
       : formattedPhone;
 
-    let message = `Buen día te saluda Nicole Alarcón asesora virtual de Crediyá:\n\n📲Me permite sus datos para una previa evaluación por favor:\n¿Cuenta con gas cálida más de 1 año? ${gasCalidda}\nNombre del titular: ${titularName}\nDNI: ${dni}\nDistrito: ${distrito}\n\n*Equipos solicitados:*\n`;
+    let message = `Buen día te saluda Nicole Alarcón asesora virtual de Crediyá:\n\nMe permite sus datos para una previa evaluación por favor:\n¿Cuenta con gas cálida más de 1 año? ${gasCalidda}\nNombre del titular: ${titularName}\nDNI: ${dni}\nDistrito: ${distrito}\n\n*Equipos solicitados:*\n`;
     items.forEach(item => {
       message += `- ${item.quantity}x ${item.name} (${item.brand})\n`;
     });
