@@ -248,27 +248,27 @@ function Index() {
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                name: "SEDE CHORRILLOS",
+                name: "Sede Chorrillos",
                 link: "https://maps.app.goo.gl/De4gKw8caJT5n2Xc7",
                 image: "/sedes/SEDE-CHORRILLOS.jpg"
               },
               {
-                name: "SEDE ATOCONGO",
+                name: "Sede Atocongo",
                 link: "https://maps.app.goo.gl/3qxJ9cCpcADPwxUr8",
                 image: "/sedes/SEDE--ATOCONGO.jpg"
               },
               {
-                name: "VILLA MARÍA 1",
+                name: "Villa María 1",
                 link: "https://maps.app.goo.gl/eDawTsHzeQvuNr3o9",
                 image: "/sedes/VILLA-MARÍA-1.jpg"
               },
               {
-                name: "VILLA MARIA 2",
+                name: "Villa María 2",
                 link: "https://maps.app.goo.gl/ykikv8oXtfKZigKG7",
                 image: "/sedes/VILLA-MARIA-2.jpg"
               },
               {
-                name: "SEDE VILLA EL SALVADOR",
+                name: "Sede Villa El Salvador",
                 link: "https://maps.app.goo.gl/SbnZTUNKL5M4VaJY7",
                 image: "/sedes/SEDE-VILLA-EL-SALVADOR.jpg"
               }
