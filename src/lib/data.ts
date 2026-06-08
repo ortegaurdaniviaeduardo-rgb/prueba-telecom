@@ -12,7 +12,7 @@ export type Product = {
 };
 
 export type Testimonial = {
-  id: string;
+  id: string | number;
   name: string;
   text: string;
   image: string;
