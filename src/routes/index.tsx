@@ -260,7 +260,7 @@ function Index() {
               {
                 name: "Villa María 1",
                 link: "https://maps.app.goo.gl/eDawTsHzeQvuNr3o9",
-                image: "/sedes/VILLA-MARÍA-1.jpg"
+                image: "/sedes/VILLA-MARIA-1.jpg"
               },
               {
                 name: "Villa María 2",
