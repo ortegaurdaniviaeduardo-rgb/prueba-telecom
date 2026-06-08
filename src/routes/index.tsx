@@ -245,62 +245,50 @@ function Index() {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Sede Principal */}
-            <div className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
-              <div className="relative h-64 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=800&auto=format&fit=crop" 
-                  alt="Sede Principal Telecom BL Express" 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-4">
-                  <span className="bg-[#FF7043] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                    Sede Principal
-                  </span>
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                name: "SEDE CHORRILLOS",
+                link: "https://maps.app.goo.gl/De4gKw8caJT5n2Xc7",
+              },
+              {
+                name: "SEDE ATOCONGO",
+                link: "https://maps.app.goo.gl/3qxJ9cCpcADPwxUr8",
+              },
+              {
+                name: "VILLA MARÍA 1",
+                link: "https://maps.app.goo.gl/eDawTsHzeQvuNr3o9",
+              },
+              {
+                name: "VILLA MARIA 2",
+                link: "https://maps.app.goo.gl/ykikv8oXtfKZigKG7",
+              },
+              {
+                name: "SEDE VILLA EL SALVADOR",
+                link: "https://maps.app.goo.gl/SbnZTUNKL5M4VaJY7",
+              }
+            ].map((sede, index) => (
+              <div key={index} className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
+                <div className="relative h-48 bg-slate-50 flex items-center justify-center overflow-hidden">
+                  <div className="absolute inset-0 opacity-[0.03] bg-[url('https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center"></div>
+                  <MapPin className="w-16 h-16 text-[#00BAA2]/30 group-hover:scale-110 group-hover:text-[#00BAA2] transition-all duration-500 relative z-10" />
+                </div>
+                <div className="p-8 flex-1 flex flex-col justify-center items-center text-center">
+                  <h4 className="text-xl font-bold text-[#1B1857] mb-4 group-hover:text-[#00BAA2] transition-colors">
+                    {sede.name}
+                  </h4>
+                  <a 
+                    href={sede.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#1B1857] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#00BAA2] transition-colors shadow-md hover:shadow-lg w-full justify-center"
+                  >
+                    <MapPin className="w-5 h-5" />
+                    Ver en Google Maps
+                  </a>
                 </div>
               </div>
-              <div className="p-8 flex-1 flex flex-col justify-center">
-                <h4 className="text-2xl font-bold text-[#1B1857] mb-4 group-hover:text-[#00BAA2] transition-colors">
-                  Tienda Central
-                </h4>
-                <div className="flex items-start gap-3 text-slate-600">
-                  <MapPin className="w-6 h-6 text-[#00BAA2] shrink-0 mt-0.5" />
-                  <p className="leading-relaxed">
-                    Av. Principal 123, Centro Comercial Tecnológico, Tumbes.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Sede Secundaria (Placeholder para el futuro o si tienen otra) */}
-            <div className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
-              <div className="relative h-64 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?q=80&w=800&auto=format&fit=crop" 
-                  alt="Sucursal Telecom BL Express" 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-4">
-                  <span className="bg-[#1B1857] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                    Sucursal Norte
-                  </span>
-                </div>
-              </div>
-              <div className="p-8 flex-1 flex flex-col justify-center">
-                <h4 className="text-2xl font-bold text-[#1B1857] mb-4 group-hover:text-[#00BAA2] transition-colors">
-                  Tienda Norte
-                </h4>
-                <div className="flex items-start gap-3 text-slate-600">
-                  <MapPin className="w-6 h-6 text-[#00BAA2] shrink-0 mt-0.5" />
-                  <p className="leading-relaxed">
-                    Av. Panamericana 456, Plaza Comercial, Tumbes.
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
