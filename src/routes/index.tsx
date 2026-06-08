@@ -268,7 +268,13 @@ function Index() {
                 link: "https://maps.app.goo.gl/SbnZTUNKL5M4VaJY7",
               }
             ].map((sede, index) => (
-              <div key={index} className="group bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 flex flex-col">
+              <a 
+                href={sede.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={index} 
+                className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 flex flex-col"
+              >
                 <div className="relative h-48 bg-slate-50 flex items-center justify-center overflow-hidden">
                   <div className="absolute inset-0 opacity-[0.03] bg-[url('https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center"></div>
                   <MapPin className="w-16 h-16 text-[#00BAA2]/30 group-hover:scale-110 group-hover:text-[#00BAA2] transition-all duration-500 relative z-10" />
@@ -277,17 +283,14 @@ function Index() {
                   <h4 className="text-xl font-bold text-[#1B1857] mb-4 group-hover:text-[#00BAA2] transition-colors">
                     {sede.name}
                   </h4>
-                  <a 
-                    href={sede.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#1B1857] text-white px-6 py-3 rounded-xl font-medium hover:bg-[#00BAA2] transition-colors shadow-md hover:shadow-lg w-full justify-center"
+                  <div 
+                    className="inline-flex items-center gap-2 bg-[#1B1857] text-white px-6 py-3 rounded-xl font-medium group-hover:bg-[#00BAA2] transition-colors shadow-md group-hover:shadow-lg w-full justify-center"
                   >
                     <MapPin className="w-5 h-5" />
                     Ver en Google Maps
-                  </a>
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
