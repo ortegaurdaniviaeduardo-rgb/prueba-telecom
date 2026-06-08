@@ -254,13 +254,7 @@ export const testimonials: Testimonial[] = [
     rating: 4,
     image: "/clientes/WhatsApp-Image-2026-05-31-at-10.49.54-AM.jpeg"
   },
-  {
-    id: 4,
-    name: "María López",
-    text: "Me encantó mi nuevo equipo. La atención por WhatsApp fue de primera.",
-    rating: 5,
-    image: ""
-  },
+
   {
     id: 5,
     name: "María López",
