@@ -6,6 +6,17 @@ import { Trash2, ArrowLeft, Plus, Minus, CheckCircle2 } from 'lucide-react';
 import { useCompanyQuery } from '@/hooks/useApi';
 import { useState } from 'react';
 
+const DISTRITOS_LIMA = [
+  "Ancón", "Ate", "Barranco", "Breña", "Carabayllo", "Chaclacayo", "Chorrillos", 
+  "Cieneguilla", "Comas", "El Agustino", "Independencia", "Jesús María", "La Molina", 
+  "La Victoria", "Lima", "Lince", "Los Olivos", "Lurigancho-Chosica", "Lurín", 
+  "Magdalena del Mar", "Miraflores", "Pachacámac", "Pucusana", "Pueblo Libre", 
+  "Puente Piedra", "Punta Hermosa", "Punta Negra", "Rímac", "San Bartolo", "San Borja", 
+  "San Isidro", "San Juan de Lurigancho", "San Juan de Miraflores", "San Luis", 
+  "San Martín de Porres", "San Miguel", "Santa Anita", "Santa María del Mar", 
+  "Santa Rosa", "Santiago de Surco", "Surquillo", "Villa El Salvador", "Villa María del Triunfo"
+];
+
 export const Route = createFileRoute('/carrito')({
   component: CarritoComponent,
 })
@@ -154,7 +165,7 @@ function CarritoComponent() {
                         placeholder="Ej. Juan Pérez"
                         className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
                         value={titularName}
-                        onChange={(e) => setTitularName(e.target.value)}
+                        onChange={(e) => setTitularName(e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''))}
                         required
                       />
                     </div>
@@ -162,24 +173,29 @@ function CarritoComponent() {
                       <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">DNI</label>
                       <input 
                         type="text" 
+                        inputMode="numeric"
+                        pattern="\d*"
                         placeholder="Ej. 12345678"
                         maxLength={8}
                         className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
                         value={dni}
-                        onChange={(e) => setDni(e.target.value)}
+                        onChange={(e) => setDni(e.target.value.replace(/\D/g, ''))}
                         required
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">Distrito</label>
-                      <input 
-                        type="text" 
-                        placeholder="Ej. San Juan de Lurigancho"
-                        className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
+                      <select 
+                        className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
                         value={distrito}
                         onChange={(e) => setDistrito(e.target.value)}
                         required
-                      />
+                      >
+                        <option value="" disabled className="text-slate-800">Selecciona tu distrito</option>
+                        {DISTRITOS_LIMA.map(d => (
+                          <option key={d} value={d} className="text-slate-800">{d}</option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 
