@@ -250,22 +250,27 @@ function Index() {
               {
                 name: "SEDE CHORRILLOS",
                 link: "https://maps.app.goo.gl/De4gKw8caJT5n2Xc7",
+                image: "/sedes/SEDE-CHORRILLOS.jpg"
               },
               {
                 name: "SEDE ATOCONGO",
                 link: "https://maps.app.goo.gl/3qxJ9cCpcADPwxUr8",
+                image: "/sedes/SEDE--ATOCONGO.jpg"
               },
               {
                 name: "VILLA MARÍA 1",
                 link: "https://maps.app.goo.gl/eDawTsHzeQvuNr3o9",
+                image: "/sedes/VILLA-MARÍA-1.jpg"
               },
               {
                 name: "VILLA MARIA 2",
                 link: "https://maps.app.goo.gl/ykikv8oXtfKZigKG7",
+                image: "/sedes/VILLA-MARIA-2.jpg"
               },
               {
                 name: "SEDE VILLA EL SALVADOR",
                 link: "https://maps.app.goo.gl/SbnZTUNKL5M4VaJY7",
+                image: "/sedes/SEDE-VILLA-EL-SALVADOR.jpg"
               }
             ].map((sede, index) => (
               <a 
@@ -275,9 +280,13 @@ function Index() {
                 key={index} 
                 className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 flex flex-col"
               >
-                <div className="relative h-48 bg-slate-50 flex items-center justify-center overflow-hidden">
-                  <div className="absolute inset-0 opacity-[0.03] bg-[url('https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center"></div>
-                  <MapPin className="w-16 h-16 text-[#00BAA2]/30 group-hover:scale-110 group-hover:text-[#00BAA2] transition-all duration-500 relative z-10" />
+                <div className="relative h-56 bg-slate-100 overflow-hidden">
+                  <img 
+                    src={sede.image} 
+                    alt={sede.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                 </div>
                 <div className="p-8 flex-1 flex flex-col justify-center items-center text-center">
                   <h4 className="text-xl font-bold text-[#1B1857] mb-4 group-hover:text-[#00BAA2] transition-colors">
