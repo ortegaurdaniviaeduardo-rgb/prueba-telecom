@@ -15,8 +15,10 @@ function CarritoComponent() {
   const itemsCount = getItemsCount();
   const { data: company } = useCompanyQuery();
 
-  const [clientName, setClientName] = useState("");
-  const [clientPhone, setClientPhone] = useState("");
+  const [gasCalidda, setGasCalidda] = useState("Sí");
+  const [titularName, setTitularName] = useState("");
+  const [dni, setDni] = useState("");
+  const [distrito, setDistrito] = useState("");
 
   const handleWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,18 +29,10 @@ function CarritoComponent() {
       ? `51${formattedPhone}` 
       : formattedPhone;
 
-    const brandName = company?.nombre_marca || "Telecom BL";
-
-    let message = `Hola ${brandName}, me interesan estos equipos a crédito:\n\n`;
+    let message = `Buen día te saluda Nicole Alarcón asesora virtual de Crediyá:\n\n📲Me permite sus datos para una previa evaluación por favor:\n¿Cuenta con gas cálida más de 1 año? ${gasCalidda}\nNombre del titular: ${titularName}\nDNI: ${dni}\nDistrito: ${distrito}\n\n*Equipos solicitados:*\n`;
     items.forEach(item => {
       message += `- ${item.quantity}x ${item.name} (${item.brand})\n`;
     });
-    
-    message += `\n*Datos del Cliente:*\n`;
-    message += `- Nombres y Apellidos: ${clientName}\n`;
-    message += `- N° Celular: ${clientPhone}\n\n`;
-    
-    message += "Por favor, indíquenme los requisitos para la evaluación de crédito.";
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
@@ -142,24 +136,48 @@ function CarritoComponent() {
                   {/* Input fields for client details */}
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">Nombres y Apellidos</label>
+                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">¿Cuenta con gas cálida más de 1 año?</label>
+                      <select 
+                        className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
+                        value={gasCalidda}
+                        onChange={(e) => setGasCalidda(e.target.value)}
+                        required
+                      >
+                        <option value="Sí" className="text-slate-800">Sí</option>
+                        <option value="No" className="text-slate-800">No</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">Nombre del titular</label>
                       <input 
                         type="text" 
                         placeholder="Ej. Juan Pérez"
                         className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
-                        value={clientName}
-                        onChange={(e) => setClientName(e.target.value)}
+                        value={titularName}
+                        onChange={(e) => setTitularName(e.target.value)}
                         required
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">N° Celular</label>
+                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">DNI</label>
                       <input 
-                        type="tel" 
-                        placeholder="Ej. 987654321"
+                        type="text" 
+                        placeholder="Ej. 12345678"
+                        maxLength={8}
                         className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
-                        value={clientPhone}
-                        onChange={(e) => setClientPhone(e.target.value)}
+                        value={dni}
+                        onChange={(e) => setDni(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-white/70 uppercase tracking-wider mb-2">Distrito</label>
+                      <input 
+                        type="text" 
+                        placeholder="Ej. San Juan de Lurigancho"
+                        className="w-full h-12 px-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-[#00BAA2] focus:ring-2 focus:ring-[#00BAA2]/20 transition-all font-medium text-sm"
+                        value={distrito}
+                        onChange={(e) => setDistrito(e.target.value)}
                         required
                       />
                     </div>
