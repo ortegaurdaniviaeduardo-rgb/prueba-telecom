@@ -93,9 +93,9 @@ function CatalogoComponent() {
           </div>
 
           {/* Filters Row */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-3 border-t border-slate-100">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 pt-4 border-t border-slate-100">
             {/* Brand Pills */}
-            <div className="flex flex-nowrap overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 items-center gap-2 w-full sm:flex-1 sm:min-w-0">
+            <div className="flex flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-visible no-scrollbar pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0 items-center gap-2 sm:gap-3 w-full sm:flex-1 sm:min-w-0">
               {categories.map((cat) => (
                 <button
                   key={cat}
