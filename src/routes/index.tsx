@@ -9,6 +9,48 @@ import { ArrowRight, ShieldCheck, Zap, Handshake, Loader2, MapPin } from 'lucide
 
 export const Route = createFileRoute('/')({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: 'Telecom BL | Celulares al crédito sin inicial en Lima' },
+      { name: 'description', content: 'Renueva tu celular con Telecom BL: crédito rápido, fácil y sin cuota inicial. Equipos originales con garantía y atención por WhatsApp en Lima.' },
+      { name: 'keywords', content: 'celulares al crédito, celulares sin inicial, crédito celular Lima, financiamiento celulares, Telecom BL, smartphones a plazos' },
+      { name: 'robots', content: 'index, follow' },
+      { property: 'og:title', content: 'Telecom BL | Celulares al crédito sin inicial en Lima' },
+      { property: 'og:description', content: 'Crédito rápido, fácil y 100% transparente para renovar tu celular. Sin cuota inicial, equipos originales y atención por WhatsApp.' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'https://telecombl.com/' },
+      { property: 'og:locale', content: 'es_PE' },
+      { property: 'og:site_name', content: 'Telecom BL' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: 'Telecom BL | Celulares al crédito sin inicial' },
+      { name: 'twitter:description', content: 'Renueva tu celular con crédito rápido, fácil y sin inicial. Equipos originales con garantía.' },
+    ],
+    links: [
+      { rel: 'canonical', href: 'https://telecombl.com/' },
+    ],
+    scripts: [
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Store',
+          name: 'Telecom BL',
+          description: 'Venta y financiamiento de celulares sin cuota inicial en Lima, Perú.',
+          url: 'https://telecombl.com/',
+          areaServed: 'Lima, Perú',
+          priceRange: '$$',
+          telephone: '+51',
+          department: [
+            { '@type': 'Store', name: 'Sede Chorrillos', url: 'https://maps.app.goo.gl/SbnZTUNKL5M4VaJY7' },
+            { '@type': 'Store', name: 'Sede Atocongo', url: 'https://maps.app.goo.gl/De4gKw8caJT5n2Xc7' },
+            { '@type': 'Store', name: 'Sede Villa María 1', url: 'https://maps.app.goo.gl/3qxJ9cCpcADPwxUr8' },
+            { '@type': 'Store', name: 'Sede Villa María 2', url: 'https://maps.app.goo.gl/eDawTsHzeQvuNr3o9' },
+            { '@type': 'Store', name: 'Sede Villa El Salvador', url: 'https://maps.app.goo.gl/ykikv8oXtfKZigKG7' },
+          ],
+        }),
+      },
+    ],
+  }),
 })
 
 function Index() {
