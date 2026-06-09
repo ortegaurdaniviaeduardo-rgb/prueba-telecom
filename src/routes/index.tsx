@@ -78,6 +78,7 @@ function Index() {
 
   return (
     <div className="flex flex-col bg-[#FFFBFB]">
+      <h1 className="sr-only">Telecom BL — Celulares al crédito sin cuota inicial en Lima</h1>
       {/* 1. PORTADA: Carrusel de imágenes de portada */}
       <section className="w-full aspect-video relative overflow-hidden bg-[#1B1857]">
         {isLoadingSlides ? (
