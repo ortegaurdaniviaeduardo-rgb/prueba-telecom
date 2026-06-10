@@ -451,9 +451,9 @@ function AppLayout() {
                 <li><a href="#" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Términos y Condiciones</a></li>
                 <li><a href="#" className="text-white/70 hover:text-[#00BAA2] transition-colors flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-[#00BAA2]"></div> Políticas de Privacidad</a></li>
               </ul>
-              <Link to="/libro-reclamaciones" className="inline-block hover:opacity-90 transition-opacity bg-white p-2 rounded-2xl shadow-md">
+              <a href="https://forms.gle/4RwFfWYUHsjHnmUE7" target="_blank" rel="noopener noreferrer" className="inline-block hover:opacity-90 transition-opacity bg-white p-2 rounded-2xl shadow-md">
                 <img src={libroReclamacionesUrl} alt="Libro de Reclamaciones" className="h-10 w-auto object-contain" />
-              </Link>
+              </a>
             </div>
             
             <div>
